@@ -1,0 +1,451 @@
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="card">
+        <div class="card-body wizard-content">
+            <h4 class="card-title">Basic Form Example</h4>
+            <h6 class="card-subtitle"></h6>
+
+            <div class="wizard clearfix ">
+                <div class="steps clearfix">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" id="step1" class="btn btn-info btn-lg" style="width: 100%;">Carga de Informacion</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button"  id="step2" class="btn btn-outline-info btn-lg" style="width: 100%;">verificacion</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button"  id="step3" class="btn btn-outline-info btn-lg" style="width: 100%;">Asignacion</button>
+                        </div>
+                    </div>
+                   
+                    
+                    
+                </div>
+                <div class="content clearfix">
+                    <h3 id="steps-uid-0-h-0" tabindex="-1" class="title current">Account</h3>
+                    <section id="steps-uid-0-p-0" role="tabpanel" aria-labelledby="steps-uid-0-h-0" class="body current"
+                        aria-hidden="false">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" accept=".xlsm"
+                                (change)="uploadFile($event)">
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+
+                        </div>
+                        <br>
+                        <div class="alert alert-success" role="alert" style="display: none;" id="alertSus">
+
+                        </div>
+                        <div class="alert alert-danger" role="alert" style="display: none;" id="alertDan">
+
+                        </div>
+
+                    </section>
+                    <h3 id="steps-uid-0-h-1" tabindex="-1" class="title">Profile</h3>
+                    <section id="steps-uid-0-p-1" role="tabpanel" aria-labelledby="steps-uid-0-h-1" class="body"
+                        aria-hidden="true" style="display: none;">
+                       <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>CODIGO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.CODIGO}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>EMPRESA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.EMPRESA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>REPRESENTANTE</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.REPRESENTANTE}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>RUC</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.RUC}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>CIUDAD</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.CIUDAD}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>DIRECCIÓN</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DIRECCION}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>TELÉFONO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.TELEFONO}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>Marca</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.Marca}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>Modelo_Versión</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.Modelo_Version}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>AÑO_MOTOR</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ANIO_MOTOR}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>VIN_CHASIS</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.VIN_CHASIS}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>SERIE_MOTOR</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.SERIE_MOTOR}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>MARCA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.MARCA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>MODELO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.MODELO}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>ANIO_CARROCERIA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ANIO_CARROCERIA}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>OP</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.OP}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>NUMERO_DE_ASIENTOS</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.NUMERO_DE_ASIENTOS}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>ESTADO_DE_REVISION</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ESTADO_DE_REVISION}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>TIPO_DE_SERVICIO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.TIPO_DE_SERVICIO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>PROPIETARIO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.PROPIETARIO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>CEDULA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.CEDULA}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>OPERADORA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.OPERADORA}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>DISCO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DISCO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>PROVINCIA_DE_MATRICULACION</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.PROVINCIA_DE_MATRICULACION}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FECHA_DE_REVISION_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FECHA_DE_REVISION_ESTRUCTURA}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>Fecha_envio_estructura</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.Fecha_envio_estructura}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>RESPONSABLE_ENVIO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.RESPONSABLE_ENVIO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FECHA_DE_REVISION_TERMINADO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FECHA_DE_REVISION_TERMINADO}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                       </div>
+                        
+                       <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>Fecha_envio_terminado</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.Fecha_envio_terminado}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>RESPONSABLE_REVICION</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.RESPONSABLE_REVICION}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>ORDEN_DE_PAGO_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ORDEN_DE_PAGO_ESTRUCTURA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>VALOR_A_PAGAR</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.VALOR_A_PAGAR}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FACTURA_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FACTURA_ESTRUCTURA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>PAGADO_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.PAGADO_ESTRUCTURA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>MES_DE_FACTURACION_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.MES_DE_FACTURACION_ESTRUCTURA}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>FORMA_DE_PAGO_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FORMA_DE_PAGO_ESTRUCTURA}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>ORDEN_DE_PAGO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ORDEN_DE_PAGO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>VALOR_A_PAGAR_ESTRUCTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.VALOR_A_PAGAR_ESTRUCTURA}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FACTURA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FACTURA}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>PAGADO_TERMINADO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.PAGADO_TERMINADO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FORMA_DE_PAGO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FORMA_DE_PAGO}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>MES_DE_FACTURACION</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.MES_DE_FACTURACION}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>VALOR_PAGADO</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.VALOR_PAGADO}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>OBSERVACIONES</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.OBSERVACIONES}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>DEBE_ENVIARSE_OBSERVACIONES</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DEBE_ENVIARSE_OBSERVACIONES}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>ACCION_OBSERVACIONES</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ACCION_OBSERVACIONES}}">
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>DIAS_PASADOS_OBSERVACIONES</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DIAS_PASADOS_OBSERVACIONES}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>DEBE_ENVIARSE</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DEBE_ENVIARSE}}" >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>ACCION</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.ACCION}}" >
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                        <div class="col-md-6">
+                            
+                            <div class="card">
+                                <div class="card-body">
+                                    
+                                    <div class="form-group m-t-20">
+                                        <label>DIAS_PASADOS</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.DIAS_PASADOS}}"  >
+                                    </div>
+                                    <div class="form-group m-t-20">
+                                        <label>FECHA</label>
+                                        <input type="text" class="form-control date-inputmask" value="{{dataSolicitud.FECHA}}" >
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                           
+    
+                        </div>
+                       </div>
+
+
+
+
+                    </section>
+                    <h3 id="steps-uid-0-h-2" tabindex="-1" class="title">Hints</h3>
+                    <section id="steps-uid-0-p-2" role="tabpanel" aria-labelledby="steps-uid-0-h-2" class="body"
+                        aria-hidden="true" style="display: none;">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title m-b-0">Tecnicos</h5>
+                            </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>
+                                                   
+                                                </th>
+                                                <th scope="col">Nombre</th>
+                                                
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody class="customtable">
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox">
+                                                        <input type="radio" class="listCheckbox" name="radioTecnicos" />
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <td>VLADIMIR POVEDA</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox">
+                                                        <input type="radio"  class="listCheckbox" name="radioTecnicos" />
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <td>CHRISTIAN BARRIGA</td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <label class="customcheckbox">
+                                                        <input type="radio" class="listCheckbox" name="radioTecnicos" />
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </th>
+                                                <td>GONZALO NARANJO</td>
+                                                
+                                            </tr>
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                        </div>
+                    </section>
+                    <h3 id="steps-uid-0-h-3" tabindex="-1" class="title">Finish</h3>
+                    <section id="steps-uid-0-p-3" role="tabpanel" aria-labelledby="steps-uid-0-h-3" class="body"
+                        aria-hidden="true" style="display: none;">
+                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                    </section>
+                </div>
+                <div class="actions clearfix">
+                    <button type="button" id="btnAtras" class="btn btn-outline-secondary " disabled="true"
+                        style="margin-right: 10px;" (click)="cklAtras()">Atras</button>
+                    <button type="button" id="btnSiguiente" class="btn btn-success" disabled="true"
+                        style="margin-right: 10px;" (click)="cklSiguiente()">Siguiente</button>
+                    <button type="button" id="btnFinalizar" class="btn btn-success" disabled="true"
+                        style="display: none;" (click)="cklFinalizar()">Finalizar</button>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+</div>
+<!-- ============================================================== -->
+<!-- End Container fluid  -->
+<!-- ============================================================== -->
