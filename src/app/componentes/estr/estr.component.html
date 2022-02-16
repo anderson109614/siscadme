@@ -259,6 +259,36 @@
                                                 </div>
 
                                             </td>
+                                            <td *ngIf="pregunta.tipo=='TEXTO'">
+                                                <div class="form-group row">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control"
+                                                            id="txtPregunta-{{pregunta.Id}}"
+                                                            aria-label="Recipient 's username"
+                                                            aria-describedby="basic-addon2"
+                                                            (change)="ChangeValue($event,pregunta.Id)">
+                                                        <div class="input-group-append">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td *ngIf="pregunta.tipo=='NUMERO'">
+                                                <div class="form-group row">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            id="txtPregunta-{{pregunta.Id}}"
+                                                            aria-label="Recipient 's username"
+                                                            aria-describedby="basic-addon2"
+                                                            (change)="ChangeValue($event,pregunta.Id)">
+                                                        <div class="input-group-append">
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
                                             <td id='pregunta-{{pregunta.Id}}'>
                                                 <span class="badge badge-secondary">N/A</span>
                                             </td>

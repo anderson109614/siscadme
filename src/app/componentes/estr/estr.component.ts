@@ -350,6 +350,29 @@ export class EstrComponent implements OnInit {
    }
 
   }
+  ChangeValue(event:any,num:Number){
+    const value = event.target.value;
+   var selected:string = value;
+   
+   console.log(value,num,selected==='0-0');
+   
+   if(selected.length>0){
+    (<HTMLDivElement>document.getElementById('pregunta-'+num.toString())).innerHTML='<span class="badge badge-success">Cumple</span>';
+    console.log('cumple');
+    return;
+   }
+   if(selected.length==0){
+    (<HTMLDivElement>document.getElementById('pregunta-'+num.toString())).innerHTML='<span class="badge badge-secondary">N/A</span>';
+    console.log('n/a');
+    return;
+   }
+   if(selected.length<0){
+    (<HTMLDivElement>document.getElementById('pregunta-'+num.toString())).innerHTML='<span class="badge badge-danger">No Cumple</span>';
+    console.log('no cumple');
+    return;
+   }
+
+  }
   changeNumber(event:any,res:[any],name:string){
     const value = event.target.value;
     var selected = value;
