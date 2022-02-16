@@ -1,12 +1,12 @@
 <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
+    <!-- ============================================================== 
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
-    </div>
+    </div>-->
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -74,7 +74,7 @@
                        
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
-                        <!-- ============================================================== -->
+                        <!-- ============================================================== 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="rounded-circle" width="31"></a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated">
@@ -88,7 +88,7 @@
                                 <div class="dropdown-divider"></div>
                                 <div class="p-l-30 p-10"><a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded">View Profile</a></div>
                             </div>
-                        </li>
+                        </li>-->
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
                         <!-- ============================================================== -->
@@ -108,7 +108,18 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav" class="p-t-30">
-                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
+                        <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link"  aria-expanded="false"><span class="hide-menu">{{user.nombre}} {{user.apellidos}}</span></a></li>
+                        
+                    </ul>
+                    <ul id="sidebarnav" class="p-t-30">
+                        <li *ngIf="exitsRuta('Solicitudes')" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="solicitudes"  aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Solicitudes</span></a></li>
+                        <li *ngIf="exitsRuta('New-Solicitudes')" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="new-solicitud"  aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Ingresar Solicitud</span></a></li>
+                        <li *ngIf="exitsRuta('descargas')" class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" routerLink="descargas"  aria-expanded="false"><i class="mdi mdi-view-dashboard"></i><span class="hide-menu">Descargas</span></a></li>
+                        <br>
+                        <li (click)="CerrarSecion()" class="sidebar-item" style="text-align: center;">
+                            <a  class="btn btn-sm btn-success btn-rounded" style="width: 70%;"><i class="fa fa-power-off m-r-5 m-l-5"></i> Cerrar Sesion</a>
+                            
+                        </li>
                         
                     </ul>
                 </nav>

@@ -8,18 +8,24 @@ import {HomeModule} from './pages/home/home.module';
 import { SolicitudesComponent } from './componentes/solicitudes/solicitudes.component';
 import { NewSolicitudComponent } from './componentes/new-solicitud/new-solicitud.component';
 import { EstrComponent } from './componentes/estr/estr.component';
+import {FormsModule} from '@angular/forms';
+import {WebcamModule} from 'ngx-webcam';
+import { DescagasComponent } from './componentes/descagas/descagas.component';
 @NgModule({
   declarations: [
     AppComponent,
     SolicitudesComponent,
     NewSolicitudComponent,
-    EstrComponent
+    EstrComponent,
+    DescagasComponent
   ],
   imports: [
     BrowserModule,
     HomeModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    WebcamModule
   ],
   providers: [],
   bootstrap: [AppComponent]

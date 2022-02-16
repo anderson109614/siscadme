@@ -50,7 +50,12 @@ export class Solicitud{
     ACCION:string|''='';
     DIAS_PASADOS:string|''='';
     FECHA:string|''='';
-
+    Aire_Acondicionado:string|''='';
+    Compartimientos_especiales:string|''='';
+    Puerta_conductor:string|''='';
+    Servicio_Transporte:string|''='';
+    IDTecnico:string|''='';
+    Formatos:any=[];
     constructor(datos:any){
         if(datos===null){
             

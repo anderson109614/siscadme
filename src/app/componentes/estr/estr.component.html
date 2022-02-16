@@ -39,35 +39,35 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3>A. DATOS PROPIETARIO DE LA UNIDAD A VERIFICAR</h3>
+                                        <h3>DATOS PROPIETARIO DE LA UNIDAD A VERIFICAR</h3>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group m-t-20">
                                                     <label>Nombres - Apellidos</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.PROPIETARIO}}">
+                                                        [(ngModel)]="dataSolicitud.Nombres">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Cédula Identidad</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.CEDULA}}">
+                                                        [(ngModel)]="dataSolicitud.Cedula">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Compañía de transporte</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.OPERADORA}}">
+                                                        [(ngModel)]="dataSolicitud.Compania">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group m-t-20">
                                                     <label>N° de Disco</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.DISCO}}">
+                                                        [(ngModel)]="dataSolicitud.Disco">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Provincia</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.PROVINCIA_DE_MATRICULACION}}">
+                                                        [(ngModel)]="dataSolicitud.Provincia">
                                                 </div>
                                             </div>
 
@@ -89,80 +89,103 @@
 
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3>B. DATOS GENERALES DEL VEHÍCULO</h3>
+                                        <h3>DATOS GENERALES DEL VEHÍCULO</h3>
                                         <div class="row">
                                             <div class="col-md-6">
+
                                                 <div class="form-group m-t-20">
                                                     <label>Marca de Chasis</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.Marca}}">
+                                                        [(ngModel)]="dataSolicitud.MarcaChasis">
+
                                                 </div>
+
+
                                                 <div class="form-group m-t-20">
                                                     <label>Modelo / Versión de chasis: </label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.Modelo_Version}}">
+                                                        [(ngModel)]="dataSolicitud.ModeloChasis">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Número VIN de chasis:</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.VIN_CHASIS}}">
+                                                        [(ngModel)]="dataSolicitud.VIN_chasis">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Número Motor de chasis:</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.SERIE_MOTOR}}">
+                                                        [(ngModel)]="dataSolicitud.NumeroMotor">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Año chasis: </label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.ANIO_MOTOR}}">
+                                                        [(ngModel)]="dataSolicitud.AnioChasis">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Aire Acondicionado:</label>
-                                                    <input type="text" class="form-control date-inputmask"
-                                                        value="POSEE">
+                                                    <select class="select2 form-control custom-select"
+                                                        [(ngModel)]="dataSolicitud.AireAcondicionado"
+                                                        style="width: 100%; height:36px;">
+
+                                                        <option value="POSEE">POSEE</option>
+                                                        <option value="NO POSEE">NO POSEE</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Compartimientos especiales:</label>
-                                                    <input type="text" class="form-control date-inputmask"
-                                                        value="POSEE">
+                                                    <select class="select2 form-control custom-select"
+                                                        [(ngModel)]="dataSolicitud.CompartimientosEspeciales"
+                                                        style="width: 100%; height:36px;">
+
+                                                        <option value="POSEE">POSEE</option>
+                                                        <option value="NO POSEE">NO POSEE</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group m-t-20">
                                                     <label>Marca de Carrocería:</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.MARCA}}">
+                                                        [(ngModel)]="dataSolicitud.MarcaCarroceria">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Modelo/Versión Carrocería: </label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.MODELO}}">
+                                                        [(ngModel)]="dataSolicitud.ModeloCarroceria">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Número de Plazas Total</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.NUMERO_DE_ASIENTOS}}">
+                                                        [(ngModel)]="dataSolicitud.PlazasTotale">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Tipo / Modalidad / Ubicación de puertas usuarios:</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.TIPO_DE_SERVICIO}}">
+                                                        [(ngModel)]="dataSolicitud.UbicacionPuertas">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Año de Fabricación Carrocería: </label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="{{dataSolicitud.ANIO_CARROCERIA}}">
+                                                        [(ngModel)]="dataSolicitud.AnioFabroicacin">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Servicio de Transporte:</label>
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="COMERCIAL">
+                                                        [(ngModel)]="dataSolicitud.ServicioTransporte">
                                                 </div>
                                                 <div class="form-group m-t-20">
                                                     <label>Puerta de conductor:</label>
+                                                    <!--
                                                     <input type="text" class="form-control date-inputmask"
-                                                        value="POSEE">
+                                                        value="POSEE">-->
+
+                                                    <select class="select2 form-control custom-select"
+                                                        style="width: 100%; height:36px;"
+                                                        [(ngModel)]="dataSolicitud.PuertaConductor">
+
+                                                        <option value="POSEE">POSEE</option>
+                                                        <option value="NO POSEE">NO POSEE</option>
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -185,7 +208,69 @@
                     <section id="steps-uid-0-p-1" role="tabpanel" aria-labelledby="steps-uid-0-h-1" class="body"
                         aria-hidden="true" style="display: none;">
                         <h1></h1>
-                        <div class="card">
+                        <div class="card" *ngFor="let seccion of listaPreguntas">
+                            <div class="card-body">
+                                <h5 class="card-title m-b-0">{{seccion.nombre}}</h5>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                        <tr>
+
+                                            <th scope="col"></th>
+                                            <th scope="col">DESCRIPCIÓN</th>
+                                            <th scope="col">Resultado</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="customtable">
+                                        <tr *ngFor="let pregunta of seccion.preguntas ">
+
+                                            <td>{{pregunta.nombre}} {{pregunta.descripcion}}</td>
+                                            <td *ngIf="pregunta.tipo=='MULTIPLE'">
+                                                <div class="form-group row">
+                                                    <select class="select2 form-control custom-select"
+                                                        id="txtPregunta-{{pregunta.Id}}"
+                                                        style="width: 100%; height:36px;"
+                                                        (change)="selectChange($event,pregunta.Id)">
+                                                        <option value="0-0">-SELECCIONE-</option>
+                                                        <option *ngFor="let res of pregunta.repuestas"
+                                                            value="{{res.valor}}-{{res.nombre}}">{{res.nombre}}</option>
+
+
+
+
+                                                    </select>
+                                                </div>
+
+                                            </td>
+                                            <td *ngIf="pregunta.tipo=='MAXMIN'">
+                                                <div class="form-group row">
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            id="txtPregunta-{{pregunta.Id}}"
+                                                            aria-label="Recipient 's username"
+                                                            aria-describedby="basic-addon2"
+                                                            (change)="changeNumber($event,pregunta.repuestas,pregunta.Id)">
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text" id="basic-addon2">mm</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                            <td id='pregunta-{{pregunta.Id}}'>
+                                                <span class="badge badge-secondary">N/A</span>
+                                            </td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title m-b-0">C.2 SUJECIONES DE LA CARROCERÍA</h5>
                             </div>
@@ -339,7 +424,7 @@
                                 </table>
                             </div>
                         </div>
-
+                        -->
 
 
                     </section>
@@ -351,195 +436,53 @@
                                 <h1>Fotos</h1>
                             </div>
                             <div class="col-md-6">
-                                <button type="button" class="btn btn-outline-success">
-                                   <i class="m-r-10 mdi mdi-camera"></i>
-                                    
-                                </button>
-                                
+                                <div class="row">
+                                    <div class="col-10">
+                                        <select class="select2 form-control custom-select" id="selecFotos"
+                                            style="width: 100%; height:36px;"  >
+
+                                            <option *ngFor="let fot of listaNombresFotos" value="{{fot.Id}}">
+                                                {{fot.Nombre}}
+                                            </option>
+
+
+
+
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <button id="btnFoto" type="button" class="btn btn-outline-success" data-toggle="modal"
+                                            data-target="#Modal3" (click)="activarCanara()">
+                                            <i class="m-r-10 mdi mdi-camera"></i>
+
+                                        </button>
+                                    </div>
+                                </div>
+
+
+
                             </div>
                         </div>
-                         
+
+
                         <div class="row el-element-overlay">
-                            <div class="col-lg-3 col-md-6">
+                            
+                            <div class="col-lg-3 col-md-6" *ngFor="let ima of listaImagenes">
                                 <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img1.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img2.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img2.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img3.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img4.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img4.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img3.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                 <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img5.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img5.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img6.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img6.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img1.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img1.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img1.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img2.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img2.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img3.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img3.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1"> <img src="assets/images/big/img4.jpg" alt="user" />
-                                            <div class="el-overlay">
-                                                <ul class="list-style-none el-info">
-                                                    <li class="el-item"><a class="btn default btn-outline image-popup-vertical-fit el-link" href="assets/images/big/img4.jpg"><i class="mdi mdi-magnify-plus"></i></a></li>
-                                                    <li class="el-item"><a class="btn default btn-outline el-link" href="javascript:void(0);"><i class="mdi mdi-link"></i></a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
+                                   <div class="el-card-item">
+                                       <div class="el-card-avatar el-overlay-1"> <img src="{{ima.img}}" alt="user" />
+                                           <div class="el-overlay">
+                                               
+                                           </div>
+                                       </div>
+                                       <div class="el-card-content">
+                                           <h4 class="m-b-0">{{ima.Nombre}}</h4> <span class="text-muted">
+                                           <button (click)="eliminarFoto(ima.Id)" class="btn btn-danger"><i class="mdi mdi-delete-circle"></i></button> 
+                                           </span>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
                         </div>
 
 
@@ -570,4 +513,48 @@
 
 
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Image Header</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrapper" (window:resize)="onResize($event)">
+
+                    <webcam [width]="width" [height]="height" [trigger]="triggerObservable"
+                        (imageCapture)="handleImage($event)" *ngIf="showWebcam" [switchCamera]="nextWebcamObservable">
+                    </webcam>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-12" style="text-align: center;">
+                        <button class="btn btn-success btn-lg" (click)="triggerSnapshot();">
+                            <i class="m-r-10 mdi mdi-camera"></i> </button>
+                    </div>
+
+                    <!--  
+                    <div class="snapshot" *ngIf="webcamImage!=null">
+                      <h2>Here is your image!</h2>
+                      <img [src]="webcamImage.imageAsDataUrl"/>
+                    </div>
+                    -->
+                </div>
+
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

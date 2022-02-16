@@ -4,6 +4,8 @@ import * as xlsx from 'xlsx';
 import {Solicitud} from '../../modelos/solicitud';
 import { SESSION_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { Router } from '@angular/router';
+import { FormatoService} from '../../servicios/formato.service'
+
 declare var $: any;
 @Component({
   selector: 'app-new-solicitud',
@@ -12,16 +14,59 @@ declare var $: any;
 })
 export class NewSolicitudComponent implements OnInit {
 
-  constructor(@Inject(SESSION_STORAGE) private storage: StorageService,public router: Router) { }
+  constructor(@Inject(SESSION_STORAGE) private storage: StorageService,public router: Router,private frmSer:FormatoService) { }
   dataSolicitud:Solicitud=new Solicitud(null);
-
+  listaFormatos:any=[];
+  listaTecnicos:any=[];
+  idTecnicoSelec:string='';
+  listaFormatosSelecionados:any=[];
   ngOnInit(): void {
     this.cargarWizard();
+    this.cargarTecnicosFormatos();
     this.btnAtras=<HTMLButtonElement>document.getElementById('btnAtras');
     this.btnSiguiente=<HTMLButtonElement>document.getElementById('btnSiguiente');
     this.btnFinalizar=<HTMLButtonElement>document.getElementById('btnFinalizar');
     this.DIVsus=<HTMLDivElement>document.getElementById('alertSus');
     this.DIVDan=<HTMLDivElement>document.getElementById('alertDan');
+    
+  }
+  cargarTecnicosFormatos(){
+    this.frmSer.getFormatos().subscribe(res=>{
+      if(res.estado){
+        this.listaFormatos=res.res;
+      }else{
+        console.log(res.mensaje);
+      }
+      
+    },
+    err=>{
+      console.log(err);
+    });
+    this.frmSer.getTecnicos().subscribe(res=>{
+      if(res.estado){
+        this.listaTecnicos=res.res;
+      }else{
+        console.log(res.mensaje);
+      }
+      
+    },
+    err=>{
+      console.log(err);
+    });
+  }
+  cklRedio(id:string){
+    
+    this.idTecnicoSelec=id;
+    console.log(this.idTecnicoSelec);
+  }
+  cklChek(id:string){
+    var check= (<HTMLInputElement>document.getElementById('check-'+id)).checked;
+    if(check){
+      this.listaFormatosSelecionados.push(id);
+    }else{
+      this.listaFormatosSelecionados=this.listaFormatosSelecionados.filter((f: string)=>f!=id);
+    }
+    console.log(this.listaFormatosSelecionados);
     
   }
   cargarWizard() {
@@ -57,7 +102,7 @@ export class NewSolicitudComponent implements OnInit {
   arrayBuffer:any;
   file:File | undefined;
   datos:any;
-  informacionCargada:boolean=false;
+  informacionCargada:boolean=true;
   numPaso=1;
   btnAtras=<HTMLButtonElement>document.getElementById('btnAtras');
   btnSiguiente=<HTMLButtonElement>document.getElementById('btnSiguiente');
@@ -139,6 +184,7 @@ export class NewSolicitudComponent implements OnInit {
     }
   }
   cklSiguiente(){
+    console.log(this.dataSolicitud);
     if(this.informacionCargada){
 
       if(this.numPaso===1){
@@ -174,10 +220,33 @@ export class NewSolicitudComponent implements OnInit {
     }
   }
   cklFinalizar(){
+    /*
     this.storage.clear();
     this.storage.set('datos',this.dataSolicitud);
           
-    this.router.navigateByUrl('/home/solicitudes');
+    this.router.navigateByUrl('/home/solicitudes');*/
+    if(this.listaFormatosSelecionados.length>0){
+      if(this.idTecnicoSelec.length!=0){
+        this.dataSolicitud.IDTecnico=this.idTecnicoSelec;
+        this.dataSolicitud.Formatos=this.listaFormatosSelecionados;
+        this.frmSer.guardarSolicitud(this.dataSolicitud).subscribe(res=>{
+          if(res.estado){
+            this.router.navigateByUrl('/home/solicitudes');
+          }else{
+            alert('Error al guardar');
+            console.log(res);
+          }
+        },
+        err=>{
+          alert('Error al guardar');
+          console.log(err);
+        });
+      }else{
+        alert('Seleccione un tecnico');
+      }
+    }else{
+      alert('Selecciones minimo un formato');
+    }
   }
   cargarDatosOBJ(){
     this.dataSolicitud= new Solicitud(this.datos);

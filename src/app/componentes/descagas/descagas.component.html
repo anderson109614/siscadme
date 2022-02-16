@@ -1,0 +1,380 @@
+<!-- ============================================================== -->
+<!-- Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Solicitudes</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="txtSearchSol" (keyup)="checkSolicitudes($event)"
+                                placeholder="Buscar">
+                        </div>
+                        <div class="col-md-6">
+                            <!--
+                            <a routerLink="/home/new-solicitud">
+                                <button type="button" class="btn btn-outline-success" >Nuevo</button>
+                            </a>
+                            -->
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="row">
+                        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar ">
+                            <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                <thead>
+                                    <tr>
+                                        <th>CEDULA</th>
+                                        <th>PROPIETARIO</th>
+                                        <th>CHASIS</th>
+                                        <th>CARROCERIA</th>
+                                        <th>PUERTAS</th>
+                                        <th>PLAZAS</th>
+                                        <td>Formato</td>
+                                        <th>Accion</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let sol of listaSolicitudes">
+                                        <td>{{sol.Cedula}} </td>
+                                        <td>{{sol.Nombres}}</td>
+                                        <td>{{sol.MarcaChasis}}</td>
+                                        <td>{{sol.MarcaCarroceria}}</td>
+                                        <td>{{sol.UbicacionPuertas}}</td>
+                                        <td>{{sol.PlazasTotale}}</td>
+                                        <td>{{sol.nombre}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success margin-5 text-white"
+                                                (click)="selecSolicitudEdit(sol)" data-toggle="modal"
+                                                data-target="#ModalSolicitud">
+                                                <i class="m-r-10 mdi mdi-file-document"></i>
+                                            </button>
+                                            <!--
+                                        <button  type="button" class="btn btn-danger" style="margin-left: 5px;"><i class="m-r-10 mdi mdi-delete"></i></button>-->
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal editar solicitud -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalSolicitud" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Verificacion de Informacion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab"><span
+                                class="hidden-sm-up"></span> <span class="hidden-xs-down">Informacion</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><span
+                                class="hidden-sm-up"></span> <span class="hidden-xs-down">Preguntas</span></a> </li>
+                    <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><span
+                                class="hidden-sm-up"></span> <span class="hidden-xs-down">Fotos</span></a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabcontent-border">
+                    <div class="tab-pane active" id="home" role="tabpanel">
+                        <div class="p-20">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <h3>DATOS PROPIETARIO DE LA UNIDAD A VERIFICAR</h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-t-20">
+                                                        <label>Nombres - Apellidos</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.Nombres">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Cédula Identidad</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.Cedula">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Compañía de transporte</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.Compania">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-t-20">
+                                                        <label>N° de Disco</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.Disco">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Provincia</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.Provincia">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Fecha</label>
+                                                        <input type="date" class="form-control date-inputmask"
+                                                            [(ngModel)]="Fecha">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h3>DATOS GENERALES DEL VEHÍCULO</h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+
+                                                    <div class="form-group m-t-20">
+                                                        <label>Marca de Chasis</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.MarcaChasis">
+
+                                                    </div>
+
+
+                                                    <div class="form-group m-t-20">
+                                                        <label>Modelo / Versión de chasis: </label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.ModeloChasis">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Número VIN de chasis:</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.VIN_chasis">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Número Motor de chasis:</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.NumeroMotor">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Año chasis: </label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.AnioChasis">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Aire Acondicionado:</label>
+                                                        <select class="select2 form-control custom-select"
+                                                            [(ngModel)]="dataSolicitud.AireAcondicionado"
+                                                            style="width: 100%; height:36px;">
+
+                                                            <option value="POSEE">POSEE</option>
+                                                            <option value="NO POSEE">NO POSEE</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Compartimientos especiales:</label>
+                                                        <select class="select2 form-control custom-select"
+                                                            [(ngModel)]="dataSolicitud.CompartimientosEspeciales"
+                                                            style="width: 100%; height:36px;">
+
+                                                            <option value="POSEE">POSEE</option>
+                                                            <option value="NO POSEE">NO POSEE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group m-t-20">
+                                                        <label>Marca de Carrocería:</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.MarcaCarroceria">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Modelo/Versión Carrocería: </label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.ModeloCarroceria">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Número de Plazas Total</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.PlazasTotale">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Tipo / Modalidad / Ubicación de puertas usuarios:</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.UbicacionPuertas">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Año de Fabricación Carrocería: </label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.AnioFabroicacin">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Servicio de Transporte:</label>
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            [(ngModel)]="dataSolicitud.ServicioTransporte">
+                                                    </div>
+                                                    <div class="form-group m-t-20">
+                                                        <label>Puerta de conductor:</label>
+                                                        <!--
+                                                        <input type="text" class="form-control date-inputmask"
+                                                            value="POSEE">-->
+
+                                                        <select class="select2 form-control custom-select"
+                                                            style="width: 100%; height:36px;"
+                                                            [(ngModel)]="dataSolicitud.PuertaConductor">
+
+                                                            <option value="POSEE">POSEE</option>
+                                                            <option value="NO POSEE">NO POSEE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane  p-20" id="profile" role="tabpanel">
+                        <div class="p-20">
+
+                            <table class="table scrollme">
+                                <thead class="thead-light">
+                                    <tr>
+
+                                        <th scope="col">Pregunta</th>
+                                        <th scope="col">Descripcion</th>
+                                        <th scope="col">Resultado</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody class="customtable">
+                                    <tr *ngFor="let pregunta of listaRespuestas ">
+
+                                        <td>{{pregunta.NombrePregunta}} {{pregunta.DescripcionPre}}</td>
+
+                                        <td>
+                                            <div class="form-group row">
+                                                <div class="input-group">
+                                                    <input class="form-control" id="" aria-label="Recipient 's username"
+                                                        aria-describedby="basic-addon2" value="{{pregunta.Respuesta}}"
+                                                        readonly>
+
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <span *ngIf="pregunta.Estado=='Cumple'"
+                                                class="badge badge-success">Cumple</span>
+                                            <span *ngIf="pregunta.Estado=='No Cumple'" class="badge badge-danger">No
+                                                Cumple</span>
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+
+
+                        </div>
+                    </div>
+                    <div class="tab-pane p-20" id="messages" role="tabpanel">
+                        <div class="p-20">
+                            <div class="row el-element-overlay">
+                                <div class="col-lg-6 col-md-3" *ngFor="let ima of listaFotosRespuestas">
+                                    <div class="card">
+                                        <div class="el-card-item">
+                                            <div class="el-card-avatar el-overlay-1"> <img src="{{ima.img}}"
+                                                    alt="user" />
+                                                <div class="el-overlay">
+
+                                                </div>
+                                            </div>
+                                            <div class="el-card-content">
+                                                <h4 class="m-b-0">{{ima.Nombre}}</h4> <span class="text-muted">
+
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="generateTerminado()">
+                    Terminado
+                </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="generateCertificado()">
+                    Certificado
+                </button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="generate()">
+                    Informe
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
