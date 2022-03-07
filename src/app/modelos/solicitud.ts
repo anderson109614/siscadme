@@ -55,6 +55,7 @@ export class Solicitud{
     Puerta_conductor:string|''='';
     Servicio_Transporte:string|''='';
     IDTecnico:string|''='';
+    responsable_acuerdo:string|''='';
     Formatos:any=[];
     constructor(datos:any){
         if(datos===null){

@@ -11,13 +11,17 @@ import { EstrComponent } from './componentes/estr/estr.component';
 import {FormsModule} from '@angular/forms';
 import {WebcamModule} from 'ngx-webcam';
 import { DescagasComponent } from './componentes/descagas/descagas.component';
+import { FormatosComponent } from './componentes/formatos/formatos.component';
+import { PreguntasComponent } from './componentes/preguntas/preguntas.component';
 @NgModule({
   declarations: [
     AppComponent,
     SolicitudesComponent,
     NewSolicitudComponent,
     EstrComponent,
-    DescagasComponent
+    DescagasComponent,
+    FormatosComponent,
+    PreguntasComponent
   ],
   imports: [
     BrowserModule,

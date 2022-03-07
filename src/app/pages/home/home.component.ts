@@ -40,6 +40,9 @@ export class HomeComponent implements OnInit {
       if(ruta=='New-Solicitudes'){
         return true
       }
+      if(ruta=='formatos'){
+        return true
+      }
 
 
 

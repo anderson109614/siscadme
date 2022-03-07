@@ -1,0 +1,653 @@
+<button class="btn btn-success" (click)="pruebaPo()">prueba</button>
+<div class="page-breadcrumb">
+    <div class="row">
+        <div class="col-12 d-flex no-block align-items-center">
+            <h4 class="page-title">Solicitudes</h4>
+            <div class="ml-auto text-right">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Library</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!--(keyup)="checkSolicitudes($event)"
+                            <input type="text" class="form-control" id="txtSearchSol" placeholder="Buscar"> -->
+                        </div>
+                        <div class="col-md-6">
+
+
+                        </div>
+                    </div>
+                    <br>
+                    <div id="tablaFormatos">
+
+
+                        <div class="row">
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-3">
+                                <h3>FORMATOS</h3>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="txtSearchFormatos" placeholder="Buscar"
+                                    (keyup)="checkFormatos($event)">
+
+                            </div>
+                            <div class="dol-md-3">
+                                <button type="button" class="btn btn-outline-success"
+                                    (click)="clickNuevoFormato()">Nuevo</button>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar ">
+                                <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                    <thead>
+                                        <tr>
+                                            <th>FORMATO</th>
+                                            <th>DOCUMENTO</th>
+                                            <th>SECCIONES</th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let for of listaFormatos">
+                                            <td>{{for.nombre}} </td>
+                                            <td>{{for.docx}}</td>
+                                            <td>{{for.num}}</td>
+
+
+
+                                            <td>
+                                                <button type="button" class="btn btn-warning margin-5 text-white"
+                                                    style="margin-left: 5px;" data-toggle="modal"
+                                                    data-target="#Modalformatoa" (click)="selectFormato(for)">
+                                                    <i class="m-r-10 mdi mdi-account-edit"></i>
+                                                </button>
+
+                                                <button type="button" class="btn btn-warning margin-5 text-white"
+                                                    style="margin-left: 5px;" (click)="mostrarTablaSecciones(for.Id)">
+                                                    <i class="m-r-10 mdi mdi-arrow-right-drop-circle"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div id="tablaSecciones" style="display: none;">
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success margin-5 text-white"
+                                    (click)="regresar('tablaFormatos')">
+                                    <i class="m-r-10 mdi mdi-arrow-left-bold"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <h3>SECCIONES</h3>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="txtSeccionesSol" placeholder="Buscar"
+                                    (keyup)="checkSeccion($event)">
+
+                            </div>
+                            <div class="dol-md-3">
+                                <button type="button" class="btn btn-outline-success"
+                                    (click)="clickNuevoSeccion()">Nuevo</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar ">
+                                <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                    <thead>
+                                        <tr>
+                                            <th>SECCION</th>
+                                            <th>DESCRIPCION</th>
+                                            <th>PREGUNTAS</th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let sec of listaSecciones">
+                                            <td>{{sec.nombre}} </td>
+                                            <td>{{sec.descripcion}}</td>
+                                            <td>{{sec.num}}</td>
+
+
+
+                                            <td>
+                                                <button type="button" class="btn btn-warning margin-5 text-white"
+                                                    style="margin-left: 5px;" data-toggle="modal"
+                                                    data-target="#ModalsECCIONES" (click)="selectSecccion(sec)">
+                                                    <i class="m-r-10 mdi mdi-account-edit"></i>
+                                                </button>
+
+                                                <button type="button" class="btn btn-warning margin-5 text-white"
+                                                    style="margin-left: 5px;" (click)="mostrarTablaPreguntas(sec.Id)">
+                                                    <i class="m-r-10 mdi mdi-arrow-right-drop-circle"></i>
+                                                </button>
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tablaPreguntas" style="display: none;">
+
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button type="button" class="btn btn-success margin-5 text-white"
+                                    (click)="regresar('tablaSecciones')">
+                                    <i class="m-r-10 mdi mdi-arrow-left-bold"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <h3>PREGUNTAS</h3>
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" id="txtSearchSol" placeholder="Buscar">
+
+                            </div>
+                            <div class="dol-md-3">
+                                <button type="button" class="btn btn-outline-success"
+                                    (click)="clickNuevaPregunta()">Nuevo</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar ">
+                                <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                    <thead>
+                                        <tr>
+                                            <th>NORMA</th>
+                                            <th>PREGUNTA</th>
+                                            <th>DESCRIPCION</th>
+                                            <th>TIPO</th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let sec of listaPreguntas">
+                                            <td>{{sec.NORMA}} </td>
+                                            <td>{{sec.nombre}} </td>
+                                            <td>{{sec.descripcion}}</td>
+                                            <td>{{sec.tipo}}</td>
+
+
+
+                                            <td>
+                                                <button type="button" class="btn btn-warning margin-5 text-white"
+                                                    data-toggle="modal" data-target="#ModalPregunta"
+                                                    (click)="selectPregunta(sec)">
+                                                    <i class="m-r-10 mdi mdi-account-edit"></i>
+                                                </button>
+
+
+
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal editar Pregunta -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalPregunta" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>DATOS</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group m-t-20">
+                                            <label>Norma</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="preguntaSelect.NORMA">
+                                        </div>
+                                        <div class="form-group m-t-20">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="preguntaSelect.nombre">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Descripcion</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="preguntaSelect.descripcion">
+                                        </div>
+                                        <div class="form-group m-t-20">
+                                            <label>Tipo</label>
+                                            <select class="select2 form-control custom-select"
+                                                (change)="selectChange($event)" style="width: 100%; height:36px;"
+                                                [(ngModel)]="preguntaSelect.tipo">
+                                                <option value="MULTIPLE">MULTIPLE</option>
+                                                <option value="MAXMIN">MAXMIN</option>
+                                                <option value="TEXTO">TEXTO</option>
+                                                <option value="NUMERO">NUMERO</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!--table-wrapper-scroll-y my-custom-scrollbar-->
+                        <div class="table-responsive  ">
+                            <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                <thead>
+                                    <tr>
+                                        <th>RESPUESTA</th>
+
+                                        <th>
+
+                                            <button type="button" id="btnAñadirRespuesta" (click)="CKLmodalRespuestas()"
+                                                disabled class="btn btn-success margin-5 text-white" data-toggle="modal"
+                                                data-target="#ModalListaRespuestas">
+                                                <i class="m-r-10 mdi mdi-library-plus"></i>
+
+                                            </button>
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let res of preguntaSelect.repuestas">
+
+                                        <td>{{res.nombre}} </td>
+
+
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-danger margin-5 text-white" (click)="eliminarSeleccionRespuesta(res)">
+                                                <i class="m-r-10 mdi mdi-delete-circle"></i>
+                                            </button>
+
+
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" data-dismiss="modal">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal editar FFORMATO -->
+<div class="modal fade modal-dialog-scrollable  " id="Modalformatoa" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>FORMATO</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="formatoSelec.nombre">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Documento</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="formatoSelec.docx">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" (click)="guardarFormato()">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal editar SECCIONES -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalsECCIONES" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>SECCIONES</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="seccionSelec.nombre">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Descripcion</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="seccionSelec.descripcion">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" (click)="guardarSeccion()">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal editar Respuestas -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalNewRespuestas" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>FORMATO</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="formatoSelec.nombre">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Documento</label>
+                                            <input type="text" class="form-control date-inputmask"
+                                                [(ngModel)]="formatoSelec.docx">
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" (click)="guardarFormato()">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal lista respuestas -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalListaRespuestas" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="txtSearchRespuestas" placeholder="Buscar"
+                            (keyup)="checkRespuestas($event)">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group m-t-20">
+                            <div class="form-group m-t-20" *ngIf="preguntaSelect.tipo=='MULTIPLE'">
+                                
+                                <select class="select2 form-control custom-select" id="txtValueRres"
+                                    style="width: 100%; height:36px;" value="1"
+                                    >
+                                    <option value="1">CUMPLE</option>
+                                    <option value="0">NO CUMPLE</option>
+                                    
+                                </select>
+
+                            </div>
+                            <div class="form-group m-t-20" *ngIf="preguntaSelect.tipo=='MAXMIN'">
+                                
+                                <input type="text" class="form-control date-inputmask" id="txtValueRres" value="1" type="number"
+                                   >
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar ">
+                            <table id="zero_config" class=" table table-striped table-bordered scrollme">
+                                <thead>
+                                    <tr>
+                                        <th>RESPUESTA</th>
+
+                                        <th>
+
+                                            <button type="button" class="btn btn-success margin-5 text-white">
+                                                <i class="m-r-10 mdi mdi-library-plus"></i>
+
+                                            </button>
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let res of listaRespuestas">
+
+                                        <td>{{res.nombre}} </td>
+
+
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-secondary margin-5 text-white"  (click)="selecRespuesta(res)" >
+                                                <i class="m-r-10 mdi mdi-arrow-down-box"></i>
+                                            </button>
+
+
+
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                
+            </div>
+        </div>
+    </div>
+</div>

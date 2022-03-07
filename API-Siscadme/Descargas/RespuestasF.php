@@ -61,8 +61,15 @@ function getPreguntas($idSeccion,$db,$idSol){
                 
         //$secciones[$i]['preguntas']=getPreguntas($secciones[$i]['Id'],$dbConn);
         $respuestas=getRespuestas($arr[$i]['Id'],$db,$idSol);
-        $arr[$i]['repuesta']=$respuestas['Respuesta'];
-        $arr[$i]['estado']=$respuestas['Estado'];
+       // echo json_encode($respuestas);
+        if($respuestas!=false){
+            $arr[$i]['repuesta']=$respuestas['Respuesta'];
+            $arr[$i]['estado']=$respuestas['Estado'];
+        }else{
+            $arr[$i]['repuesta']='N/A';
+            $arr[$i]['estado']='N/A';
+        }
+        
     }
     return $arr;
 }

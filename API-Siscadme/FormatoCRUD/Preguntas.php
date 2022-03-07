@@ -9,17 +9,11 @@ $dbConn =  connect($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
     try {
-        
+        if (isset($_GET['id']))
+        {
+            /*
             $sql = $dbConn->prepare("
-            SELECT
-            form.*
-             
-         FROM
-             formato form
-         WHERE
-              form.Estado=1
-         			
-           ");
+           SELECT *,'' as preguntas FROM `seccion_formato` WHERE `id_formato`=".$_GET['id']);
            
             $sql->execute();
 	        $sql->setFetchMode(PDO::FETCH_OBJ);
@@ -27,11 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
 
             $secciones=$sql->fetchAll();
 
+           */
+            $preguntas=getPreguntas($_GET['id'],$dbConn);
+                
             
             $res['estado']=true;
-            $res['res']=$secciones ;
+            $res['res']=$preguntas;
             
-        
+        }else{
+            $res['estado']=false;
+            $res['mensaje']='No id';
+        }
            
      		
  		
@@ -53,7 +53,7 @@ function getPreguntas($idSeccion,$db){
     
 
     //obtengo todos los pedidos del porteador requerido
-    $strSql="SELECT * FROM preguntas where Id_seccion=".$idSeccion;
+    $strSql="SELECT * FROM preguntas where Estado='1' and Id_seccion=".$idSeccion;
     //echo $strSql ORDER BY M.codigo;
     $stmt = $db->prepare($strSql);
     //$sql->bindValue(':est', 'PQ');//codpaquete

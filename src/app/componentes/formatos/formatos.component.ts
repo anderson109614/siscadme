@@ -1,0 +1,397 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, OnInit } from '@angular/core';
+import { FormatoService } from 'src/app/servicios/formato.service';
+import { StorageLocalService } from 'src/app/servicios/storage.service';
+import Swal from 'sweetalert2';
+declare var $: any;
+@Component({
+  selector: 'app-formatos',
+  templateUrl: './formatos.component.html',
+  styleUrls: ['./formatos.component.css']
+})
+export class FormatosComponent implements OnInit {
+
+  constructor(private storageLocal: StorageLocalService,
+    private frmSer: FormatoService) { }
+  guardar = false;
+  listaFormatos: any = [];
+  listaFormatosAux: any = [];
+  listaSecciones: any = [];
+  listaSeccionesAux: any = [];
+  listaPreguntas: any = [];
+  listaPreguntasAux: any = [];
+  ngOnInit(): void {
+    this.CargarFFormatos();
+  }
+  CargarFFormatos() {
+    this.frmSer.getFormatosCRUC().subscribe(res => {
+      if (res.estado) {
+        this.listaFormatos = res.res;
+        this.listaFormatosAux = res.res;
+      } else {
+        console.log(res);
+      }
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  mostrarTablaSecciones(IdFor: string) {
+    this.formatoSelec.Id = IdFor;
+    this.frmSer.getSeccionesFormatos(IdFor).subscribe(res => {
+      if (res.estado) {
+        this.listaSecciones = res.res;
+        this.listaSeccionesAux = res.res;
+        (<HTMLDivElement>document.getElementById('tablaSecciones')).style.display = "block";
+        (<HTMLDivElement>document.getElementById('tablaFormatos')).style.display = "none";
+      } else {
+        console.log(res);
+      }
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  mostrarTablaPreguntas(IdSec: string) {
+    console.log("baa");
+    this.frmSer.getPreguntasSeccion(IdSec).subscribe(res => {
+      if (res.estado) {
+        this.listaPreguntas = res.res;
+        this.listaPreguntasAux = res.res;
+        (<HTMLDivElement>document.getElementById('tablaPreguntas')).style.display = "block";
+        (<HTMLDivElement>document.getElementById('tablaSecciones')).style.display = "none";
+      } else {
+        console.log(res);
+      }
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  regresar(name: string) {
+    (<HTMLDivElement>document.getElementById('tablaFormatos')).style.display = "none";
+    (<HTMLDivElement>document.getElementById('tablaSecciones')).style.display = "none";
+    (<HTMLDivElement>document.getElementById('tablaPreguntas')).style.display = "none";
+
+    (<HTMLDivElement>document.getElementById(name)).style.display = "block";
+  }
+  preguntaSelect: {Id: string,
+  nombre: string,
+  descripcion: string,
+  tipo: string,
+  Id_seccion:string,
+  NORMA: string,
+  repuestas: any} = {
+    Id: "",
+    nombre: "",
+    descripcion: "",
+    tipo: "",
+    Id_seccion: "",
+    NORMA: "",
+    repuestas: []
+  };
+  /*
+{
+      id_pregunta: "",
+      id_respuesta: "",
+      valor: "",
+      Id: "",
+      nombre: ""
+    }
+  */
+  selectPregunta(pregunta: any) {
+    this.preguntaSelect = pregunta;
+    this.guardar = false;
+    console.log(this.preguntaSelect);
+  }
+  formatoSelec: any = { Id: '', nombre: '', docx: '' };
+  selectFormato(formato: any) {
+    this.formatoSelec = formato;
+    this.guardar = false;
+    console.log(this.formatoSelec);
+  }
+  seccionSelec: any = { Id: '', nombre: '', descripcion: '', id_formato: '' };
+  selectSecccion(seccion: any) {
+    this.seccionSelec = seccion;
+    this.guardar = false;
+    console.log(this.seccionSelec);
+  }
+  alertBN(txt: string) {
+    Swal.fire(
+      'Buen Trabajo',
+      txt,
+      'success'
+    )
+  }
+
+  alertBAD(txt: string) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: txt
+
+    })
+  }
+  clickNuevoFormato() {
+    this.guardar = true;
+    this.formatoSelec = { Id: '', nombre: '', docx: '' };
+    $('#Modalformatoa').modal('show');
+  }
+  checkFormatos($event: KeyboardEvent) {
+    this.listaFormatos = this.listaFormatosAux;
+    let value = (<HTMLInputElement>document.getElementById('txtSearchFormatos')).value;
+    console.log(value);
+    /*
+        let value = (<HTMLInputElement>event.target).value;
+          */
+    if (value != "") {
+      const result = this.listaFormatos.filter((frm: any) => frm.nombre.toUpperCase().search(value.toUpperCase()) >= 0
+        //  || estudianteB.APELLIDOS.toUpperCase().search(value.toUpperCase()) >= 0
+        //   || estudianteB.GENERO.toUpperCase().search(value.toUpperCase()) >= 0
+        //  || estudianteB.CARRERA.toUpperCase().search(value.toUpperCase()) >= 0
+      );
+      this.listaFormatos = result;
+    } else {
+      this.listaFormatos = this.listaFormatosAux;
+    }
+  }
+  guardarFormato() {
+    if (this.guardar) {
+      this.frmSer.newFormatosCRUC(this.formatoSelec).subscribe(
+        res => {
+          if (res.estado) {
+            this.alertBN('Registro guardado con exito');
+            this.formatoSelec = res.res;
+            $('#Modalformatoa').modal('hide');
+          } else {
+            this.alertBAD('Error al guardar el registro');
+            console.log(res);
+          }
+        }, err => {
+          this.alertBAD('Error al guardar el registro');
+          console.log(err);
+        }
+      );
+    } else {
+      this.frmSer.updateFormatosCRUC(this.formatoSelec).subscribe(
+        res => {
+          if (res.estado) {
+            this.alertBN('Registro Actualizado con exito');
+            $('#Modalformatoa').modal('hide');
+          } else {
+            this.alertBAD('Error al actualizar el registro');
+            console.log(res);
+          }
+        }, err => {
+          this.alertBAD('Error al actualizar el registro');
+          console.log(err);
+        }
+      );
+    }
+    this.CargarFFormatos();
+  }
+  clickNuevoSeccion() {
+    this.guardar = true;
+    this.seccionSelec = { Id: '', nombre: '', descripcion: '', id_formato: '' };
+    $('#ModalsECCIONES').modal('show');
+  }
+  guardarSeccion() {
+    this.seccionSelec.id_formato = this.formatoSelec.Id;
+    console.log("Formato", this.formatoSelec);
+    console.log("Seccion", this.seccionSelec);
+    if (this.guardar) {
+
+      this.frmSer.newSeccionesFormatos(this.seccionSelec).subscribe(
+        res => {
+          console.log(res);
+          if (res.estado) {
+            this.alertBN('Registro guardado con exito');
+            $('#ModalsECCIONES').modal('hide');
+            this.mostrarTablaSecciones(this.formatoSelec.Id);
+          } else {
+            this.alertBAD('Error al guardar el registro');
+            console.log(res);
+          }
+        }, err => {
+          this.alertBAD('Error al guardar el registro');
+          console.log(err);
+        }
+      );
+    } else {
+      this.frmSer.updateSeccionesFormatos(this.seccionSelec).subscribe(
+        res => {
+          console.log(res);
+          if (res.estado) {
+            this.alertBN('Registro Actualizado con exito');
+            $('#ModalsECCIONES').modal('hide');
+            this.mostrarTablaSecciones(this.formatoSelec.Id);
+          } else {
+            this.alertBAD('Error al actualizar el registro');
+            console.log(res);
+          }
+        }, err => {
+          this.alertBAD('Error al actualizar el registro');
+          console.log(err);
+        }
+      );
+    }
+   
+  }
+  checkSeccion($event: KeyboardEvent) {
+    this.listaSecciones = this.listaSeccionesAux;
+    let value = (<HTMLInputElement>document.getElementById('txtSeccionesSol')).value;
+    console.log(value);
+    /*
+        let value = (<HTMLInputElement>event.target).value;
+          */
+    if (value != "") {
+      const result = this.listaSecciones.filter((frm: any) => frm.nombre.toUpperCase().search(value.toUpperCase()) >= 0
+        //  || estudianteB.APELLIDOS.toUpperCase().search(value.toUpperCase()) >= 0
+        //   || estudianteB.GENERO.toUpperCase().search(value.toUpperCase()) >= 0
+        //  || estudianteB.CARRERA.toUpperCase().search(value.toUpperCase()) >= 0
+      );
+      this.listaSecciones = result;
+    } else {
+      this.listaSecciones = this.listaSeccionesAux;
+    }
+  }
+  clickNuevaPregunta(){
+    this.guardar = true;
+    this.preguntaSelect = {
+        Id: "",
+        nombre: "",
+        descripcion: "",
+        tipo: "",
+        Id_seccion: "",
+        NORMA: "",
+        repuestas: []
+      };
+    $('#ModalPregunta').modal('show');
+  }
+  selectChange(event: any) {
+    const value = event.target.value;
+    var selected: string = value;
+
+    console.log(selected );
+    this.cargarREspuestas();
+    //btnAñadirRespuesta
+    var btnMas=(<HTMLSelectElement>document.getElementById('btnAñadirRespuesta'))
+    if(selected=='MULTIPLE'){
+      btnMas.disabled=false;
+    }
+    if(selected=='MAXMIN'){
+      btnMas.disabled=false;
+    }
+    if(selected=='TEXTO'){
+      btnMas.disabled=true;
+    }
+    if(selected=='NUMERO'){
+      btnMas.disabled=true;
+    }
+    this.preguntaSelect.tipo=selected;
+    
+
+  }
+  listaRespuestas:any=[];
+  listaRespuestasAux:any=[];
+  cargarREspuestas(){
+    this.frmSer.getRespuestasCRUD().subscribe(res=>{
+      if(res.estado){
+        this.listaRespuestas=res.res;
+        this.listaRespuestasAux=res.res;
+      }else{
+        console.log(res);
+      }
+    },
+    err=>{
+      console.log(err);
+    });
+  }
+  CKLmodalRespuestas(){
+    console.log("obj",this.preguntaSelect);
+    if(this.preguntaSelect.tipo=='MULTIPLE'){
+      this.listaRespuestas= this.listaRespuestasAux.filter((res:any)=>res.nombre!='MAX' || res.nombre!='MIN');
+      console.log("Modal res mul");
+    }
+    if(this.preguntaSelect.tipo=='MAXMIN'){
+      this.listaRespuestas= this.listaRespuestasAux.filter((res:any)=>res.nombre=='MAX' || res.nombre=='MIN');
+      console.log("Modal res max");
+    }
+  }
+  checkRespuestas($event: KeyboardEvent){
+    this.listaRespuestas = this.listaRespuestasAux;
+    let value = (<HTMLInputElement>document.getElementById('txtSearchRespuestas')).value;
+    console.log(value);
+   
+    if (value != "") {
+      const result = this.listaRespuestas.filter((frm: any) => frm.nombre.toUpperCase().search(value.toUpperCase()) >= 0
+       
+      );
+      this.listaRespuestas = result;
+    } else {
+      this.listaRespuestas = this.listaRespuestasAux;
+    }
+  }
+  selecRespuesta(res:any){
+    /*
+    {
+    Id: "",
+    nombre: "",
+    descripcion: "",
+    tipo: "",
+    Id_seccion: "",
+    NORMA: "",
+    repuestas: [{
+      id_pregunta: "",
+      id_respuesta: "",
+      valor: "",
+      Id: "",
+      nombre: ""
+    }]
+  };
+    
+    */ 
+    
+    var value=(<HTMLSelectElement>document.getElementById('txtValueRres')).value;
+    console.log("res",this.preguntaSelect.repuestas);
+    this.preguntaSelect.repuestas.push({
+      id_pregunta: this.preguntaSelect.Id,
+      id_respuesta: res.Id,
+      valor: value,
+      Id: "",
+      nombre: res.nombre});
+      var res=this.listaRespuestas.filter((pre:any)=>pre.Id!=res.Id);
+      this.listaRespuestas= res;
+      //this.listaRespuestasAux=res;
+      console.log("pre",this.preguntaSelect);
+      $('#ModalListaRespuestas').modal('hide');
+  }
+  eliminarSeleccionRespuesta(res: any){
+    console.log("del",res);
+    this.preguntaSelect.repuestas= this.preguntaSelect.repuestas.filter((re:any)=>re.id_respuesta!=res.id_respuesta);
+    this.listaRespuestas.push(this.listaRespuestasAux.filter((re:any)=>re.Id==res.id_respuesta ));
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  pruebaPo(){
+    this.frmSer.prueba().subscribe(res=>{
+      console.log("res,",res);
+      
+    },err=>{
+      console.log("res,",err)
+    });
+  }
+
+}

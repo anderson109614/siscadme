@@ -202,6 +202,72 @@
                             </div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+        
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3>DATOS DE LA EMPRESA</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                               
+                                                    <div class="form-group m-t-20">
+                                                        <label>Empresa</label>
+                                                        <input type="text" class="form-control date-inputmask" 
+                                                        [(ngModel)]="dataSolicitud.empresa"  >
+                                                        
+                                                    </div>
+                                              
+                                               
+                                                <div class="form-group m-t-20">
+                                                    <label>Representante </label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.representate">
+                                                </div>
+                                                <div class="form-group m-t-20">
+                                                    <label>Ciudad</label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.ciudad">
+                                                </div>
+                                                <div class="form-group m-t-20">
+                                                    <label>RESPONSABLE DE ACUERDO</label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.responsable_acuerdo">
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group m-t-20">
+                                                    <label>RUC</label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.ruc">
+                                                </div>
+                                                <div class="form-group m-t-20">
+                                                    <label>Telefono </label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.telefono">
+                                                </div>
+                                                <div class="form-group m-t-20">
+                                                    <label>Direccion</label>
+                                                    <input type="text" class="form-control date-inputmask"
+                                                    [(ngModel)]="dataSolicitud.direccion">
+                                                </div>
+                                                
+                                            </div>
+        
+                                        </div>
+        
+        
+        
+        
+        
+                                    </div>
+                                </div>
+        
+        
+                            </div>
+        
+                        </div>
 
                     </section>
                     <h3 id="steps-uid-0-h-1" tabindex="-1" class="title">Profile</h3>
@@ -487,6 +553,19 @@
 
                                         </button>
                                     </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-10">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="validatedCustomFile" (change)="onUploadChange($event)"
+                                            accept=".png, .jpg, .jpeg, .pdf" required>
+                                            <label class="custom-file-label" for="validatedCustomFile" >Choose file...</label>
+                                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        </div>
+                                        
+                                    </div>
+                                    
                                 </div>
 
 
@@ -500,14 +579,14 @@
                             <div class="col-lg-3 col-md-6" *ngFor="let ima of listaImagenes">
                                 <div class="card">
                                    <div class="el-card-item">
-                                       <div class="el-card-avatar el-overlay-1"> <img src="{{ima.img}}" alt="user" />
+                                       <div class="el-card-avatar el-overlay-1"> <img src="{{ima.img}}" alt="user" width="80px" height="80px" />
                                            <div class="el-overlay">
                                                
                                            </div>
                                        </div>
                                        <div class="el-card-content">
                                            <h4 class="m-b-0">{{ima.Nombre}}</h4> <span class="text-muted">
-                                           <button (click)="eliminarFoto(ima.Id)" class="btn btn-danger"><i class="mdi mdi-delete-circle"></i></button> 
+                                           <button (click)="eliminarFoto(ima.IdFoto)" class="btn btn-danger"><i class="mdi mdi-delete-circle"></i></button> 
                                            </span>
                                        </div>
                                    </div>
@@ -584,6 +663,37 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal img-->
+<div class="modal fade" id="ModalImg" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Image Header</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrapper" (window:resize)="onResize($event)">
+
+                    
+                    <img src="{{base64textStringG}}" [width]="width" [height]="height" >
+
+                </div>
+                
+
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" (click)="AdjuntarFoto()">Guardar</button>
             </div>
         </div>
     </div>

@@ -97,7 +97,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             `ServicioTransporte`,
             `CompartimientosEspeciales`,
             `PuertaConductor`,
-            `IDTecnico`
+            `IDTecnico`,
+            `empresa`,
+            `representate`,
+            `ruc`,
+            `ciudad`,
+            `direccion`,
+            `telefono`,
+            `responsable_acuerdo`
         )
         VALUES(
             '".$input['CEDULA']."',
@@ -119,7 +126,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             '".$input['Servicio_Transporte']."',
             '".$input['Compartimientos_especiales']."',
             '".$input['Puerta_conductor']."',
-            ".$input['IDTecnico']."
+            ".$input['IDTecnico'].",
+            '".$input['EMPRESA']."',
+            '".$input['REPRESENTANTE']."',
+            '".$input['RUC']."',
+            '".$input['CIUDAD']."',
+            '".$input['DIRECCION']."',
+            '".$input['TELEFONO']."',
+            '".$input['responsable_acuerdo']."'
             
             
         )";
@@ -225,7 +239,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
          `AireAcondicionado` = '".$input['AireAcondicionado']."',
          `ServicioTransporte` = '".$input['ServicioTransporte']."',
          `CompartimientosEspeciales` = '".$input['CompartimientosEspeciales']."',
-         `PuertaConductor` = '".$input['PuertaConductor']."' 
+         `PuertaConductor` = '".$input['PuertaConductor']."' ,
+         `empresa` ='".$input['empresa']."' ,
+         `representate` = '".$input['representate']."',
+         `ruc` = '".$input['ruc']."',
+         `ciudad` = '".$input['ciudad']."',
+         `direccion` = '".$input['direccion']."',
+         `telefono` = '".$input['telefono']."',
+         `responsable_acuerdo` = '".$input['responsable_acuerdo']."' 
+
       WHERE
          `Id`='".$input['Id']."'
             ";
@@ -255,11 +277,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
          $statement->bindValue(':PuertaConductorp', $input['Puerta_conductor'] );
          $statement->bindValue(':IDTecnicop', $input['IDTecnico'] );
          */
-         $res['res']=$statement;
-         $res['res']=$statement->execute();
+         
          
         // $postId = $dbConn->lastInsertId();
-     
+        $res['res']=$statement;
+        $res['res']=$statement->execute();
          
          header("HTTP/1.1 200 OK");
          $res['estado']=true;

@@ -11,21 +11,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
         {
             
             $sql = $dbConn->prepare("
-                SELECT
-                    so.*,
-                    fo.Id as IdFormato,
-                    fo.nombre,
-                    sf.Id as IdSolFor,
-                    fo.docx
-                FROM
-                    solicitud so,
-                    formato fo,
-                    solicitud_formatos sf
-                 WHERE
-                    so.Id = sf.IdSolicitud 
-                    AND sf.IdFormato = fo.Id
-                    AND sf.Estado='1'
-                    AND so.IDTecnico=".$_GET['id']." 		
+            SELECT
+            so.*,
+            fo.Id as IdFormato,
+            fo.nombre,
+            sf.Id as IdSolFor,
+            fo.docx,
+            us.nombre as NombreTecnico,
+            us.apellidos as ApellidosTecnico,
+            us.email as EmailTEcnico
+        FROM
+            solicitud so,
+            formato fo,
+            solicitud_formatos sf,
+            usuarios us
+         WHERE
+            so.Id = sf.IdSolicitud 
+            AND sf.IdFormato = fo.Id
+            AND so.IDTecnico=us.id
+            AND sf.Estado='1'
+            AND so.IDTecnico=".$_GET['id']." 		
            ");
             
             

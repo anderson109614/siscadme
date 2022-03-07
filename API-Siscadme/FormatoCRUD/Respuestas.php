@@ -11,14 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
     try {
         
             $sql = $dbConn->prepare("
-            SELECT
-            form.*
-             
-         FROM
-             formato form
-         WHERE
-              form.Estado=1
-         			
+            SELECT * FROM `posibles_respuestas`			
            ");
            
             $sql->execute();
@@ -43,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
         $res['mensaje']=$e->getMessage();
         
     }
-    echo json_encode($res);
-}else{
     echo json_encode($res);
 }
 
