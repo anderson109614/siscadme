@@ -9,29 +9,42 @@ $dbConn =  connect($db);
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
     try {
-        if (isset($_GET['id']))
-        {
-            /*
+        
             $sql = $dbConn->prepare("
-           SELECT *,'' as preguntas FROM `seccion_formato` WHERE `id_formato`=".$_GET['id']);
+            SELECT
+            form.*,
+            '0' AS num
+        FROM
+            formato form
+            WHERE   form.Estado=1
+        GROUP BY
+            form.Id			
+           ");
            
             $sql->execute();
-	        $sql->setFetchMode(PDO::FETCH_OBJ);
+	        $sql->setFetchMode(PDO::FETCH_ASSOC);
+
+            $formatos=$sql->fetchAll();
+            $cantidades=getConut($dbConn);
+            for($i=0;$i<count($formatos);$i++){
+                for($j=0;$j<count($cantidades);$j++){
+                    if($formatos[$i]['Id']==$cantidades[$j]['Id']){
+                        $formatos[$i]['num']=$cantidades[$j]['num'];
+                    }
+                  
+                     
+                }
+               
+            }
             header("HTTP/1.1 200 OK");
 
-            $secciones=$sql->fetchAll();
+            
 
-           */
-            $preguntas=getPreguntas($_GET['id'],$dbConn);
-                
             
             $res['estado']=true;
-            $res['res']=$preguntas;
+            $res['res']=$formatos ;
             
-        }else{
-            $res['estado']=false;
-            $res['mensaje']='No id';
-        }
+        
            
      		
  		
@@ -47,23 +60,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' ) {
 }
 
 
-function getPreguntas($idSeccion,$db){
+function getConut($db){
     
 
     //obtengo todos los pedidos del porteador requerido
-    $strSql="SELECT * FROM preguntas where Estado='1' and Id_seccion=".$idSeccion;
+    $strSql="SELECT
+    form.*,
+    COUNT(sec.Id) as num
+     
+ FROM
+     formato form,
+     seccion_formato sec
+ WHERE
+     form.Id = sec.id_formato
+     and form.Estado=1
+  GROUP BY form.Id	";
     //echo $strSql ORDER BY M.codigo;
     $stmt = $db->prepare($strSql);
     //$sql->bindValue(':est', 'PQ');//codpaquete
     $stmt->execute();
     $stmt->setFetchMode(PDO::FETCH_OBJ);
     $arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    for($i=0;$i<count($arr);$i++){
-                
-        //$secciones[$i]['preguntas']=getPreguntas($secciones[$i]['Id'],$dbConn);
-        $respuestas=getRespuestas($arr[$i]['Id'],$db);
-        $arr[$i]['repuestas']=$respuestas;
-    }
+    
     return $arr;
 }
 function getRespuestas($idPregunta,$db){
@@ -85,28 +103,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         //$input = $_POST;
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $sql = "INSERT INTO `preguntas`(    
-            `nombre`,
-            `descripcion`,
-            `tipo`,
-            `Id_seccion`,
-            `NORMA`,
-            `Estado`
-        )
-        VALUES(
-            :nombre,
-            :descripcion,
-            :tipo,
-            :Id_seccion,
-            :NORMA,
-            '1'
-        )";
+        $sql = "INSERT INTO `posibles_respuestas`(`nombre`, `Estado`)
+        VALUES(:nombre,'1')";
         $statement = $dbConn->prepare($sql);
         $statement->bindValue(':nombre', $input['nombre']);
-        $statement->bindValue(':descripcion', $input['descripcion']);
-        $statement->bindValue(':tipo', $input['tipo']);
-        $statement->bindValue(':Id_seccion', $input['Id_seccion']);
-        $statement->bindValue(':NORMA', $input['NORMA']);
               
         // bindAllValues($statement, $input,-1);
         $statement->execute();
@@ -126,6 +126,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $res['estado']=false;
         $res['mensaje']=$e->getMessage();
     }
+}
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    
+    try {
+        //$input = $_POST;
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        $sql = "UPDATE
+        `formato`
+    SET
+       
+        `nombre` = :nombre,
+        `docx` = :docx
+    WHERE
+        `Id`=:id";
+        $statement = $dbConn->prepare($sql);
+        $statement->bindValue(':nombre', $input['nombre']);
+        $statement->bindValue(':docx', $input['docx']);
+        $statement->bindValue(':id', $input['Id']);
+              
+        // bindAllValues($statement, $input,-1);
+        $statement->execute();
+        header("HTTP/1.1 200 OK");
+       
+        $res['estado']=true;
+        $res['res']=$input ;
+        echo json_encode($res);
+        
+    } catch (Exception $e) {
+        $res['estado']=false;
+        $res['mensaje']=$e->getMessage();
+    }
+   
 }
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     /*

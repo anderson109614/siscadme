@@ -26,6 +26,7 @@ export class FormatosComponent implements OnInit {
   CargarFFormatos() {
     this.frmSer.getFormatosCRUC().subscribe(res => {
       if (res.estado) {
+        console.log(res);
         this.listaFormatos = res.res;
         this.listaFormatosAux = res.res;
       } else {
@@ -52,9 +53,27 @@ export class FormatosComponent implements OnInit {
         console.log(err);
       });
   }
-  mostrarTablaPreguntas(IdSec: string) {
+  mostrarTablaPreguntas(Sec: string) {
+    this.seccionSelec=Sec;
     console.log("baa");
-    this.frmSer.getPreguntasSeccion(IdSec).subscribe(res => {
+    this.frmSer.getPreguntasSeccion(this.seccionSelec.Id).subscribe(res => {
+      if (res.estado) {
+        this.listaPreguntas = res.res;
+        this.listaPreguntasAux = res.res;
+        (<HTMLDivElement>document.getElementById('tablaPreguntas')).style.display = "block";
+        (<HTMLDivElement>document.getElementById('tablaSecciones')).style.display = "none";
+      } else {
+        console.log(res);
+      }
+    },
+      err => {
+        console.log(err);
+      });
+  }
+  mostrarTablaPreguntasId(id: string) {
+    
+    console.log("baa");
+    this.frmSer.getPreguntasSeccion(id).subscribe(res => {
       if (res.estado) {
         this.listaPreguntas = res.res;
         this.listaPreguntasAux = res.res;
@@ -75,21 +94,23 @@ export class FormatosComponent implements OnInit {
 
     (<HTMLDivElement>document.getElementById(name)).style.display = "block";
   }
-  preguntaSelect: {Id: string,
-  nombre: string,
-  descripcion: string,
-  tipo: string,
-  Id_seccion:string,
-  NORMA: string,
-  repuestas: any} = {
-    Id: "",
-    nombre: "",
-    descripcion: "",
-    tipo: "",
-    Id_seccion: "",
-    NORMA: "",
-    repuestas: []
-  };
+  preguntaSelect: {
+    Id: string,
+    nombre: string,
+    descripcion: string,
+    tipo: string,
+    Id_seccion: string,
+    NORMA: string,
+    repuestas: any
+  } = {
+      Id: "",
+      nombre: "",
+      descripcion: "",
+      tipo: "",
+      Id_seccion: "",
+      NORMA: "",
+      repuestas: []
+    };
   /*
 {
       id_pregunta: "",
@@ -99,10 +120,12 @@ export class FormatosComponent implements OnInit {
       nombre: ""
     }
   */
+ nuevaPregunta=true;
   selectPregunta(pregunta: any) {
     this.preguntaSelect = pregunta;
     this.guardar = false;
     console.log(this.preguntaSelect);
+    this.nuevaPregunta=false;
   }
   formatoSelec: any = { Id: '', nombre: '', docx: '' };
   selectFormato(formato: any) {
@@ -114,7 +137,7 @@ export class FormatosComponent implements OnInit {
   selectSecccion(seccion: any) {
     this.seccionSelec = seccion;
     this.guardar = false;
-    console.log(this.seccionSelec);
+    console.log("sec selec",this.seccionSelec);
   }
   alertBN(txt: string) {
     Swal.fire(
@@ -235,7 +258,7 @@ export class FormatosComponent implements OnInit {
         }
       );
     }
-   
+
   }
   checkSeccion($event: KeyboardEvent) {
     this.listaSecciones = this.listaSeccionesAux;
@@ -255,84 +278,87 @@ export class FormatosComponent implements OnInit {
       this.listaSecciones = this.listaSeccionesAux;
     }
   }
-  clickNuevaPregunta(){
+  clickNuevaPregunta() {
     this.guardar = true;
     this.preguntaSelect = {
-        Id: "",
-        nombre: "",
-        descripcion: "",
-        tipo: "",
-        Id_seccion: "",
-        NORMA: "",
-        repuestas: []
-      };
+      Id: "",
+      nombre: "",
+      descripcion: "",
+      tipo: "",
+      Id_seccion: "",
+      NORMA: "",
+      repuestas: []
+    };
+    this.nuevaPregunta=false;
     $('#ModalPregunta').modal('show');
   }
   selectChange(event: any) {
     const value = event.target.value;
     var selected: string = value;
 
-    console.log(selected );
+    console.log(selected);
     this.cargarREspuestas();
     //btnAñadirRespuesta
-    var btnMas=(<HTMLSelectElement>document.getElementById('btnAñadirRespuesta'))
-    if(selected=='MULTIPLE'){
-      btnMas.disabled=false;
+    var btnMas = (<HTMLSelectElement>document.getElementById('btnAñadirRespuesta'))
+    if (selected == 'MULTIPLE') {
+      btnMas.disabled = false;
     }
-    if(selected=='MAXMIN'){
-      btnMas.disabled=false;
+    if (selected == 'MAXMIN') {
+      btnMas.disabled = false;
     }
-    if(selected=='TEXTO'){
-      btnMas.disabled=true;
+    if (selected == 'TEXTO') {
+      btnMas.disabled = true;
+
     }
-    if(selected=='NUMERO'){
-      btnMas.disabled=true;
+    if (selected == 'NUMERO') {
+      btnMas.disabled = true;
     }
-    this.preguntaSelect.tipo=selected;
-    
+    this.preguntaSelect.repuestas = [];
+    this.preguntaSelect.tipo = selected;
+
 
   }
-  listaRespuestas:any=[];
-  listaRespuestasAux:any=[];
-  cargarREspuestas(){
-    this.frmSer.getRespuestasCRUD().subscribe(res=>{
-      if(res.estado){
-        this.listaRespuestas=res.res;
-        this.listaRespuestasAux=res.res;
-      }else{
+  listaRespuestas: any = [];
+  listaRespuestasAux: any = [];
+  cargarREspuestas() {
+    this.frmSer.getRespuestasCRUD().subscribe(res => {
+      if (res.estado) {
+        this.listaRespuestas = res.res;
+        this.listaRespuestasAux = res.res;
+      } else {
         console.log(res);
       }
     },
-    err=>{
-      console.log(err);
-    });
+      err => {
+        console.log(err);
+      });
   }
-  CKLmodalRespuestas(){
-    console.log("obj",this.preguntaSelect);
-    if(this.preguntaSelect.tipo=='MULTIPLE'){
-      this.listaRespuestas= this.listaRespuestasAux.filter((res:any)=>res.nombre!='MAX' || res.nombre!='MIN');
+  CKLmodalRespuestas() {
+    console.log("obj", this.preguntaSelect);
+    if (this.preguntaSelect.tipo == 'MULTIPLE') {
+      this.listaRespuestas = this.listaRespuestasAux.filter((res: any) => res.nombre != 'MAX' || res.nombre != 'MIN');
       console.log("Modal res mul");
     }
-    if(this.preguntaSelect.tipo=='MAXMIN'){
-      this.listaRespuestas= this.listaRespuestasAux.filter((res:any)=>res.nombre=='MAX' || res.nombre=='MIN');
+    if (this.preguntaSelect.tipo == 'MAXMIN') {
+      this.listaRespuestas = this.listaRespuestasAux.filter((res: any) => res.nombre == 'MAX' || res.nombre == 'MIN');
       console.log("Modal res max");
     }
   }
-  checkRespuestas($event: KeyboardEvent){
+  checkRespuestas($event: KeyboardEvent) {
     this.listaRespuestas = this.listaRespuestasAux;
     let value = (<HTMLInputElement>document.getElementById('txtSearchRespuestas')).value;
     console.log(value);
-   
+
     if (value != "") {
       const result = this.listaRespuestas.filter((frm: any) => frm.nombre.toUpperCase().search(value.toUpperCase()) >= 0
-       
+
       );
       this.listaRespuestas = result;
     } else {
       this.listaRespuestas = this.listaRespuestasAux;
     }
   }
-  selecRespuesta(res:any){
+  selecRespuesta(res: any) {
     /*
     {
     Id: "",
@@ -350,28 +376,104 @@ export class FormatosComponent implements OnInit {
     }]
   };
     
-    */ 
-    
-    var value=(<HTMLSelectElement>document.getElementById('txtValueRres')).value;
-    console.log("res",this.preguntaSelect.repuestas);
+    */
+
+    var value = (<HTMLSelectElement>document.getElementById('txtValueRres')).value;
+    console.log("res", this.preguntaSelect.repuestas);
     this.preguntaSelect.repuestas.push({
       id_pregunta: this.preguntaSelect.Id,
       id_respuesta: res.Id,
       valor: value,
       Id: "",
-      nombre: res.nombre});
-      var res=this.listaRespuestas.filter((pre:any)=>pre.Id!=res.Id);
-      this.listaRespuestas= res;
-      //this.listaRespuestasAux=res;
-      console.log("pre",this.preguntaSelect);
-      $('#ModalListaRespuestas').modal('hide');
+      nombre: res.nombre
+    });
+    var res = this.listaRespuestas.filter((pre: any) => pre.Id != res.Id);
+    this.listaRespuestas = res;
+    //this.listaRespuestasAux=res;
+    console.log("pre", this.preguntaSelect);
+    $('#ModalListaRespuestas').modal('hide');
   }
-  eliminarSeleccionRespuesta(res: any){
-    console.log("del",res);
-    this.preguntaSelect.repuestas= this.preguntaSelect.repuestas.filter((re:any)=>re.id_respuesta!=res.id_respuesta);
-    this.listaRespuestas.push(this.listaRespuestasAux.filter((re:any)=>re.Id==res.id_respuesta ));
+  eliminarSeleccionRespuesta(res: any) {
+    console.log("del", res);
+    this.preguntaSelect.repuestas = this.preguntaSelect.repuestas.filter((re: any) => re.id_respuesta != res.id_respuesta);
+    this.listaRespuestas.push(this.listaRespuestasAux.search((re: any) => re.Id == res.id_respuesta));
   }
-  
+  guardarNewPosibleRespuesta() {
+    var nombre = (<HTMLInputElement>document.getElementById('txtNombreNewPosibleRespuesta')).value;
+    this.frmSer.GuardarNewPosibleRespuesta(nombre).subscribe(
+      res => {
+        console.log(res);
+        this.cargarREspuestas();
+        (<HTMLInputElement>document.getElementById('txtNombreNewPosibleRespuesta')).value = '';
+        $('#ModalPosibleRespuesta').modal('hide');
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  guardarPregunta() {
+    if (this.validarPregunta()) {
+      this.preguntaSelect.Id_seccion=this.seccionSelec.Id;
+      console.log("selll",this.preguntaSelect);
+      this.frmSer.GuardarPreguntaCRUD(this.preguntaSelect).subscribe(res=>{
+        if(res.estado){
+          console.log(res);
+          this.guardarRespuestas(res.res.Id);
+        }else{
+          console.log(res);
+        }
+      },
+      err=>{
+        console.log(err);
+      });
+    }
+  }
+  guardarRespuestas(Id:string){
+    for (let index = 0; index < this.preguntaSelect.repuestas.length; index++) {
+      var element = this.preguntaSelect.repuestas[index];
+      element.id_pregunta=Id;
+      console.log("element",element);
+      this.frmSer.GuardarRespuestaCRUD(element).subscribe(res=>{
+        console.log(res);
+      },
+      err=>{
+        console.log(err );
+      });
+    }
+    this.mostrarTablaPreguntasId(this.seccionSelec.Id);
+    $('#ModalPregunta').modal('hide');
+  }
+
+  validarPregunta() {
+    if (this.preguntaSelect.NORMA.length==0) {
+      this.alertBAD('Ingrese numero de Norma');
+      return false;
+    }
+    if (this.preguntaSelect.nombre.length==0) {
+      this.alertBAD('Ingrese numero de Norma');
+      return false;
+    }
+
+    if (this.preguntaSelect.tipo == 'MULTIPLE') {
+      if (this.preguntaSelect.repuestas.length == 0) {
+        this.alertBAD('Seleccione minimo una respuesta');
+        return false;
+      }
+    }
+    if (this.preguntaSelect.tipo == 'MAXMIN') {
+      if (this.preguntaSelect.repuestas.length != 2) {
+        this.alertBAD('Seleccione las respuestas max y min con sus respectivos valores');
+        return false;
+      }
+    }
+
+
+
+
+    return true;
+  }
 
 
 
@@ -381,16 +483,12 @@ export class FormatosComponent implements OnInit {
 
 
 
+  pruebaPo() {
+    this.frmSer.prueba().subscribe(res => {
+      console.log("res,", res);
 
-
-
-
-  pruebaPo(){
-    this.frmSer.prueba().subscribe(res=>{
-      console.log("res,",res);
-      
-    },err=>{
-      console.log("res,",err)
+    }, err => {
+      console.log("res,", err)
     });
   }
 

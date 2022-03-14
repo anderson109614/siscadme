@@ -151,7 +151,7 @@
                                                 </button>
 
                                                 <button type="button" class="btn btn-warning margin-5 text-white"
-                                                    style="margin-left: 5px;" (click)="mostrarTablaPreguntas(sec.Id)">
+                                                    style="margin-left: 5px;" (click)="mostrarTablaPreguntas(sec)">
                                                     <i class="m-r-10 mdi mdi-arrow-right-drop-circle"></i>
                                                 </button>
 
@@ -358,7 +358,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-success" data-dismiss="modal">
+                <button type="button" class="btn btn-success" *ngIf="nuevaPregunta" (click)="guardarPregunta()" >
                     Guardar
                 </button>
             </div>
@@ -607,11 +607,17 @@
                                         <th>RESPUESTA</th>
 
                                         <th>
-
-                                            <button type="button" class="btn btn-success margin-5 text-white">
-                                                <i class="m-r-10 mdi mdi-library-plus"></i>
-
-                                            </button>
+                                            <div class="form-group m-t-20" *ngIf="preguntaSelect.tipo=='MULTIPLE'">
+                                
+                                                <button type="button" class="btn btn-success margin-5 text-white" 
+                                                data-toggle="modal"
+                                                data-target="#ModalPosibleRespuesta" >
+                                                    <i class="m-r-10 mdi mdi-library-plus"></i>
+    
+                                                </button>
+                
+                                            </div>
+                                            
                                         </th>
 
 
@@ -647,6 +653,62 @@
             <div class="modal-footer">
 
                 
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal new posible respuesta -->
+<div class="modal fade modal-dialog-scrollable  " id="ModalPosibleRespuesta" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alert Model</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h3> New Respuesta</h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group m-t-20">
+                                            <label>Nombre</label>
+                                            <input type="text" class="form-control date-inputmask" id="txtNombreNewPosibleRespuesta"
+                                                >
+                                        </div>
+
+                                    </div>
+                                    
+
+
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" (click)="guardarNewPosibleRespuesta()">
+                    Guardar
+                </button>
             </div>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,11 @@ import {WebcamModule} from 'ngx-webcam';
 import { DescagasComponent } from './componentes/descagas/descagas.component';
 import { FormatosComponent } from './componentes/formatos/formatos.component';
 import { PreguntasComponent } from './componentes/preguntas/preguntas.component';
+
+import {registerLocaleData} from '@angular/common';
+import localeEs from '@angular/common/locales/es-EC';
+registerLocaleData(localeEs,'es');
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +36,7 @@ import { PreguntasComponent } from './componentes/preguntas/preguntas.component'
     FormsModule,
     WebcamModule
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

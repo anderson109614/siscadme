@@ -94,6 +94,15 @@ export class FormatoService {
   getRespuestasCRUD(){
     return this.http.get<any>(this.ip+'FormatoCRUD/Respuestas.php');
   }
+  GuardarNewPosibleRespuesta(nombre:string){
+    return this.http.post<any>(this.ip+'FormatoCRUD/Posible.php',{nombre:nombre});
+  }
+  GuardarPreguntaCRUD(pregunta:any){
+    return this.http.post<any>(this.ip+'FormatoCRUD/Preguntas.php',pregunta);
+  }
+  GuardarRespuestaCRUD(respuesta:any){
+    return this.http.post<any>(this.ip+'FormatoCRUD/Respuestas.php',respuesta);
+  }
   prueba(){
    // return this.http.post<any>('https://sgp.esfloserv.com/API-Esfloserv/Usuarios/UsuariosC.php',{ nombre:'1204554958',password:'6583'});
   // return this.http.get<any>('http://sgp.esfloserv.com/API-Esfloserv/Paquetes/Paquetes.php?idPorteador='+'25'+'&est='+'PQ');
@@ -114,6 +123,6 @@ export class FormatoService {
     fecha:' data[i].fecha'
 
   };
-  return this.http.post<any>('http://sgp.esfloserv.com/API-Esfloserv/Paquetes/Detalles.php',obj);
+  return this.http.post<any>('https://sgp.esfloserv.com/API-Esfloserv/Paquetes/Detalles.php',obj);
   }
 }

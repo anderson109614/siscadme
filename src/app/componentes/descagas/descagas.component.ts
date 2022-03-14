@@ -5,6 +5,7 @@ import { SESSION_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { FormatoService } from 'src/app/servicios/formato.service';
 import { StorageLocalService } from 'src/app/servicios/storage.service';
 import { Solicitud } from '../../modelos/solicitud';
+import {formatDate,DatePipe} from '@angular/common';
 import { con } from '../../modelos/Coneccion';
 //import Docxtemplater from "docxtemplater";
 import PizZip from "pizzip";
@@ -75,13 +76,13 @@ export class DescagasComponent implements OnInit {
   dia:string="";
   mes:string="";
   año:string="";
-  Fecha:string="";
+  Fecha:string|null="";
 
   generate() {
 
     console.log(con.ipser + "Formato/docs/" + this.dataSolicitud.docx);
     loadFile(
-      con.ipser + "Formato/docs/" + this.dataSolicitud.docx,
+      con.ipser + "Formato/docs/" + this.dataSolicitud.docx.split(',')[0],
       (error: any, content: any) => {
         if (error) {
           throw error;
@@ -132,7 +133,7 @@ export class DescagasComponent implements OnInit {
 
 
     loadFile(
-      con.ipser + "Formato/docs/Terminado.docx",
+      con.ipser + "Formato/docs/"+this.dataSolicitud.docx.split(',')[2],
       (error: any, content: any) => {
         if (error) {
           throw error;
@@ -182,7 +183,7 @@ export class DescagasComponent implements OnInit {
 
 
     loadFile(
-      con.ipser + "Formato/docs/Certificado.docx" ,
+      con.ipser + "Formato/docs/"+this.dataSolicitud.docx.split(',')[1] ,
       (error: any, content: any) => {
         if (error) {
           throw error;
@@ -275,8 +276,11 @@ export class DescagasComponent implements OnInit {
     if(this.mes.length==1){
       this.mes="0"+this.mes;
     }
-    this.Fecha=this.año+"-"+this.mes+"-"+this.dia;
-    console.log(this.Fecha);
+
+    //this.Fecha=this.año+"-"+this.mes+"-"+this.dia;
+    let datePipe= new DatePipe('es');
+    this.Fecha=datePipe.transform(this.date,'EEEE dd, MMMM yyyy');
+    console.log("Fecha",this.Fecha);
     this.cargarUsuario();
     this.cargarlistaSolicitudes();
 
@@ -375,6 +379,7 @@ export class DescagasComponent implements OnInit {
     this.cargarRespuestas();
     this.cargarFotosRespuestas();
     this.cargarRespuestasFormato();
+
   }
   ActualizarSolicitud() {
     this.frmSer.ActulizarSolicitud(this.dataSolicitud).subscribe(res => {

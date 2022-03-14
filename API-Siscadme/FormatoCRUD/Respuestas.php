@@ -75,36 +75,44 @@ function getRespuestas($idPregunta,$db){
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    /*
     try {
         //$input = $_POST;
         $input = (array) json_decode(file_get_contents('php://input'), TRUE);
-        $sql = "INSERT INTO prestamos_laboratorios(
-            id_laboratorio,
-            Fecha,
-            Descripcion
+        $sql = "INSERT INTO `preguta_resp`(
+            `id_pregunta`,
+            `id_respuesta`,
+            `valor`,
+            `Estado`
         )
         VALUES(
-            :id_laboratorio,
-            NOW(),
-            :Descripcion
+            :id_pregunta,
+            :id_respuesta,
+            :valor,
+            '1'
         )";
         $statement = $dbConn->prepare($sql);
-        $statement->bindValue(':id_laboratorio', $input['idLab']);
-        $statement->bindValue(':Descripcion', $input['des']);
+        $statement->bindValue(':id_pregunta', $input['id_pregunta']);
+        $statement->bindValue(':id_respuesta', $input['id_respuesta']);
+        $statement->bindValue(':valor', $input['valor']);
               
         // bindAllValues($statement, $input,-1);
         $statement->execute();
+        /*
         $postId = $dbConn->lastInsertId();
         if ($postId) {
-            $input['id'] = $postId;
-            header("HTTP/1.1 200 OK");
-            echo json_encode($input);
-        }
+            $input['Id'] = $postId;
+            
+        }*/
+        header("HTTP/1.1 200 OK");
+       
+        $res['estado']=true;
+       // $res['res']=$input ;
+        echo json_encode($res);
+        
     } catch (Exception $e) {
-        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        $res['estado']=false;
+        $res['mensaje']=$e->getMessage();
     }
-    */
 }
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     /*
