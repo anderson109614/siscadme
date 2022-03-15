@@ -70,7 +70,7 @@ function getRespuestas($idPregunta,$db){
     
 
     //obtengo todos los pedidos del porteador requerido
-    $strSql="SELECT * from preguta_resp pr,posibles_respuestas por WHERE pr.id_respuesta=por.id and pr.id_pregunta=".$idPregunta;
+    $strSql="SELECT * from preguta_resp pr,posibles_respuestas por WHERE pr.id_respuesta=por.id AND pr.Estado='1' and pr.id_pregunta=".$idPregunta;
     //echo $strSql ORDER BY M.codigo;
     $stmt = $db->prepare($strSql);
     //$sql->bindValue(':est', 'PQ');//codpaquete
@@ -125,8 +125,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } catch (Exception $e) {
         $res['estado']=false;
         $res['mensaje']=$e->getMessage();
+        echo json_encode($res);
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    try {
+        //$input = $_POST;
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        $sql = "UPDATE
+        `preguntas`
+    SET
+        
+        `nombre` = :nombre,
+        `descripcion` = :descripcion ,
+        `tipo` =:tipo,
+        `Id_seccion` = :Id_seccion,
+        `NORMA` = :NORMA
+    WHERE
+        `Id`=:Id";
+        $statement = $dbConn->prepare($sql);
+        $statement->bindValue(':nombre', $input['nombre']);
+        $statement->bindValue(':descripcion', $input['descripcion']);
+        $statement->bindValue(':tipo', $input['tipo']);
+        $statement->bindValue(':Id_seccion', $input['Id_seccion']);
+        $statement->bindValue(':NORMA', $input['NORMA']);
+        $statement->bindValue(':Id', $input['Id']);  
+        // bindAllValues($statement, $input,-1);
+        $statement->execute();
+        
+        
+        header("HTTP/1.1 200 OK");
+       
+        $res['estado']=true;
+        $res['res']=$input ;
+        echo json_encode($res);
+        
+    } catch (Exception $e) {
+        $res['estado']=false;
+        $res['mensaje']=$e->getMessage();
+        echo json_encode($res);
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     /*
     try {

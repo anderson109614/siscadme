@@ -160,25 +160,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
    
 }
 if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
-    /*
     try {
-        $idpre = $_GET['idPrestamo'];
-        $idhor = $_GET['idHorarios'];
-        $statement = $dbConn->prepare("DELETE FROM prestamos_laboratorios_horarios WHERE id_prestamo=:idPrestamo AND id_horario=:idHorario");
-        $statement->bindValue(':idPrestamo', $idpre);
-        $statement->bindValue(':idHorario', $idhor);
+        //$input = $_POST;
+        $input = (array) json_decode(file_get_contents('php://input'), TRUE);
+        $id_pregunta = $_GET['id_pregunta'];
+        $id_respuesta = $_GET['id_respuesta'];
+        $sql = "UPDATE
+        `preguta_resp`
+    SET
+       
+        `Estado` = '0'
+    WHERE
+        `id_pregunta`=:id_pregunta
+        AND `id_respuesta`=:id_respuesta";
+        $statement = $dbConn->prepare($sql);
+        $statement->bindValue(':id_pregunta', $id_pregunta);
+        $statement->bindValue(':id_respuesta', $id_respuesta);
+              
+        // bindAllValues($statement, $input,-1);
         $statement->execute();
-        $object3 = (object) [
-            'id' => $idpre,
-            'msj' => 'OK'
-                        
-          ];
         header("HTTP/1.1 200 OK");
-        echo json_encode($object3);
+       
+        $res['estado']=true;
+        $res['prueba']=true;
+        $res['res']=$input ;
+        echo json_encode($res);
+        
     } catch (Exception $e) {
-        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        $res['estado']=false;
+        $res['mensaje']=$e->getMessage();
     }
-    */
 }
 header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *");

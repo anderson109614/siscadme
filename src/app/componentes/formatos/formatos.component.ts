@@ -54,7 +54,7 @@ export class FormatosComponent implements OnInit {
       });
   }
   mostrarTablaPreguntas(Sec: string) {
-    this.seccionSelec=Sec;
+    this.seccionSelec = Sec;
     console.log("baa");
     this.frmSer.getPreguntasSeccion(this.seccionSelec.Id).subscribe(res => {
       if (res.estado) {
@@ -71,7 +71,7 @@ export class FormatosComponent implements OnInit {
       });
   }
   mostrarTablaPreguntasId(id: string) {
-    
+
     console.log("baa");
     this.frmSer.getPreguntasSeccion(id).subscribe(res => {
       if (res.estado) {
@@ -120,12 +120,36 @@ export class FormatosComponent implements OnInit {
       nombre: ""
     }
   */
- nuevaPregunta=true;
+  nuevaPregunta = true;
   selectPregunta(pregunta: any) {
     this.preguntaSelect = pregunta;
     this.guardar = false;
-    console.log(this.preguntaSelect);
-    this.nuevaPregunta=false;
+    console.log("pre selecc",this.preguntaSelect);
+    this.nuevasRespuestas=[];
+    this.nuevaPregunta = false;
+
+
+    var selected: string = pregunta.tipo;
+
+    console.log(selected);
+    this.cargarREspuestas();
+    //btnAñadirRespuesta
+    var btnMas = (<HTMLSelectElement>document.getElementById('btnAñadirRespuesta'));
+    if (selected == 'MULTIPLE') {
+      btnMas.disabled = false;
+    }
+    if (selected == 'MAXMIN') {
+      btnMas.disabled = false;
+    }
+    if (selected == 'TEXTO') {
+      btnMas.disabled = true;
+
+    }
+    if (selected == 'NUMERO') {
+      btnMas.disabled = true;
+    }
+
+
   }
   formatoSelec: any = { Id: '', nombre: '', docx: '' };
   selectFormato(formato: any) {
@@ -137,7 +161,7 @@ export class FormatosComponent implements OnInit {
   selectSecccion(seccion: any) {
     this.seccionSelec = seccion;
     this.guardar = false;
-    console.log("sec selec",this.seccionSelec);
+    console.log("sec selec", this.seccionSelec);
   }
   alertBN(txt: string) {
     Swal.fire(
@@ -289,7 +313,10 @@ export class FormatosComponent implements OnInit {
       NORMA: "",
       repuestas: []
     };
-    this.nuevaPregunta=false;
+    this.nuevasRespuestas=[];
+    this.nuevaPregunta = false;
+    var btnMas = (<HTMLSelectElement>document.getElementById('btnAñadirRespuesta'));
+    btnMas.disabled=true;
     $('#ModalPregunta').modal('show');
   }
   selectChange(event: any) {
@@ -377,25 +404,49 @@ export class FormatosComponent implements OnInit {
   };
     
     */
+    if (this.nuevaPregunta) {
+      var value = (<HTMLSelectElement>document.getElementById('txtValueRres')).value;
+      console.log("res", this.preguntaSelect.repuestas);
+      this.preguntaSelect.repuestas.push({
+        id_pregunta: this.preguntaSelect.Id,
+        id_respuesta: res.Id,
+        valor: value,
+        Id: "",
+        nombre: res.nombre
+      });
+      var res = this.listaRespuestas.filter((pre: any) => pre.Id != res.Id);
+      this.listaRespuestas = res;
+      //this.listaRespuestasAux=res;
+      console.log("pre", this.preguntaSelect);
+      $('#ModalListaRespuestas').modal('hide');
+    }else{
+      var value = (<HTMLSelectElement>document.getElementById('txtValueRres')).value;
+      
+      this.nuevasRespuestas.push({
+        id_pregunta: this.preguntaSelect.Id,
+        id_respuesta: res.Id,
+        valor: value,
+        Id: "",
+        nombre: res.nombre
+      });
+      var res = this.listaRespuestas.filter((pre: any) => pre.Id != res.Id);
+      this.listaRespuestas = res;
+      //this.listaRespuestasAux=res;
+      console.log("pre", this.preguntaSelect);
+      $('#ModalListaRespuestas').modal('hide');
+    }
 
-    var value = (<HTMLSelectElement>document.getElementById('txtValueRres')).value;
-    console.log("res", this.preguntaSelect.repuestas);
-    this.preguntaSelect.repuestas.push({
-      id_pregunta: this.preguntaSelect.Id,
-      id_respuesta: res.Id,
-      valor: value,
-      Id: "",
-      nombre: res.nombre
-    });
-    var res = this.listaRespuestas.filter((pre: any) => pre.Id != res.Id);
-    this.listaRespuestas = res;
-    //this.listaRespuestasAux=res;
-    console.log("pre", this.preguntaSelect);
-    $('#ModalListaRespuestas').modal('hide');
   }
+  nuevasRespuestas:any=[];
+  respuestasEliminadas:any=[];
   eliminarSeleccionRespuesta(res: any) {
     console.log("del", res);
-    this.preguntaSelect.repuestas = this.preguntaSelect.repuestas.filter((re: any) => re.id_respuesta != res.id_respuesta);
+    this.respuestasEliminadas.push(res);
+    this.preguntaSelect.repuestas = this.preguntaSelect.repuestas.filter((re: any) => !(re.id_respuesta == res.id_respuesta && re.id_pregunta == res.id_pregunta));
+    this.listaRespuestas.push(this.listaRespuestasAux.search((re: any) => re.Id == res.id_respuesta));
+  }
+  eliminarSeleccionRespuestaNuevas(res: any){
+    this.nuevasRespuestas = this.nuevasRespuestas.filter((re: any) => re.id_respuesta != res.id_respuesta);
     this.listaRespuestas.push(this.listaRespuestasAux.search((re: any) => re.Id == res.id_respuesta));
   }
   guardarNewPosibleRespuesta() {
@@ -415,43 +466,43 @@ export class FormatosComponent implements OnInit {
 
   guardarPregunta() {
     if (this.validarPregunta()) {
-      this.preguntaSelect.Id_seccion=this.seccionSelec.Id;
-      console.log("selll",this.preguntaSelect);
-      this.frmSer.GuardarPreguntaCRUD(this.preguntaSelect).subscribe(res=>{
-        if(res.estado){
+      this.preguntaSelect.Id_seccion = this.seccionSelec.Id;
+      console.log("selll", this.preguntaSelect);
+      this.frmSer.GuardarPreguntaCRUD(this.preguntaSelect).subscribe(res => {
+        if (res.estado) {
           console.log(res);
           this.guardarRespuestas(res.res.Id);
-        }else{
+        } else {
           console.log(res);
         }
       },
-      err=>{
-        console.log(err);
-      });
+        err => {
+          console.log(err);
+        });
     }
   }
-  guardarRespuestas(Id:string){
+  guardarRespuestas(Id: string) {
     for (let index = 0; index < this.preguntaSelect.repuestas.length; index++) {
       var element = this.preguntaSelect.repuestas[index];
-      element.id_pregunta=Id;
-      console.log("element",element);
-      this.frmSer.GuardarRespuestaCRUD(element).subscribe(res=>{
+      element.id_pregunta = Id;
+      console.log("element", element);
+      this.frmSer.GuardarRespuestaCRUD(element).subscribe(res => {
         console.log(res);
       },
-      err=>{
-        console.log(err );
-      });
+        err => {
+          console.log(err);
+        });
     }
     this.mostrarTablaPreguntasId(this.seccionSelec.Id);
     $('#ModalPregunta').modal('hide');
   }
 
   validarPregunta() {
-    if (this.preguntaSelect.NORMA.length==0) {
+    if (this.preguntaSelect.NORMA.length == 0) {
       this.alertBAD('Ingrese numero de Norma');
       return false;
     }
-    if (this.preguntaSelect.nombre.length==0) {
+    if (this.preguntaSelect.nombre.length == 0) {
       this.alertBAD('Ingrese numero de Norma');
       return false;
     }
@@ -474,8 +525,85 @@ export class FormatosComponent implements OnInit {
 
     return true;
   }
+  ActualizarPregunta() {
+    console.log("pre sel",this.preguntaSelect);
+    console.log("nuevas",this.nuevasRespuestas);
+    console.log("eliminadas",this.respuestasEliminadas);
+    if (this.validarPreguntaAct()) {
+      this.preguntaSelect.Id_seccion = this.seccionSelec.Id;
+      
+      this.frmSer.actualizarPreguntaCRUD(this.preguntaSelect).subscribe(res => {
+        console.log(res);
+        if (res.estado) {
+          
+          this.eliminarRespuesas();
+          this.guardarRespuestasNew(this.preguntaSelect.Id);
+        } else {
+          console.log(res);
+        }
+      },
+        err => {
+          console.log(err);
+        });
+    }
+
+  }
+  eliminarRespuesas(){
+    for (let index = 0; index < this.respuestasEliminadas.length; index++) {
+      var element =  this.respuestasEliminadas[index];
+      console.log("eliminarrrr",element);
+      this.frmSer.eliminarRespuestaCRUD(element).subscribe(res => {
+        console.log(res);
+      },
+        err => {
+          console.log(err);
+        });
+    }
+  }
+  guardarRespuestasNew(Id:string) {
+    for (let index = 0; index < this.nuevasRespuestas.length; index++) {
+      var element = this.nuevasRespuestas[index];
+      element.id_pregunta = Id;
+      console.log("element", element);
+      this.frmSer.GuardarRespuestaCRUD(element).subscribe(res => {
+        console.log(res);
+      },
+        err => {
+          console.log(err);
+        });
+    }
+    //this.mostrarTablaPreguntasId(this.seccionSelec.Id);
+    $('#ModalPregunta').modal('hide');
+  }
+
+  validarPreguntaAct() {
+    if (this.preguntaSelect.NORMA.length == 0) {
+      this.alertBAD('Ingrese numero de Norma');
+      return false;
+    }
+    if (this.preguntaSelect.nombre.length == 0) {
+      this.alertBAD('Ingrese numero de Norma');
+      return false;
+    }
+
+    if (this.preguntaSelect.tipo == 'MULTIPLE') {
+      if ((this.preguntaSelect.repuestas.length+this.nuevasRespuestas.length) == 0) {
+        this.alertBAD('Seleccione minimo una respuesta');
+        return false;
+      }
+    }
+    if (this.preguntaSelect.tipo == 'MAXMIN') {
+      if ((this.preguntaSelect.repuestas.length+this.nuevasRespuestas.length) != 2) {
+        this.alertBAD('Seleccione las respuestas max y min con sus respectivos valores');
+        return false;
+      }
+    }
 
 
+
+
+    return true;
+  }
 
 
 

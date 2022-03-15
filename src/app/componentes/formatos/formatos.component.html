@@ -1,4 +1,4 @@
-<button class="btn btn-success" (click)="pruebaPo()">prueba</button>
+
 <div class="page-breadcrumb">
     <div class="row">
         <div class="col-12 d-flex no-block align-items-center">
@@ -239,7 +239,7 @@
         </div>
     </div>
 </div>
-<!-- Modal editar Pregunta -->
+<!-- Modal nueva Pregunta -->
 <div class="modal fade modal-dialog-scrollable  " id="ModalPregunta" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -347,7 +347,23 @@
 
                                         </td>
                                     </tr>
+                                    
+                                    <tr *ngFor="let res of nuevasRespuestas">
 
+                                        <td>{{res.nombre}} </td>
+
+
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-danger margin-5 text-white" (click)="eliminarSeleccionRespuestaNuevas(res)">
+                                                <i class="m-r-10 mdi mdi-delete-circle"></i>
+                                            </button>
+
+
+
+                                        </td>
+                                    </tr>
                                 </tbody>
 
                             </table>
@@ -361,10 +377,20 @@
                 <button type="button" class="btn btn-success" *ngIf="nuevaPregunta" (click)="guardarPregunta()" >
                     Guardar
                 </button>
+                <button type="button" class="btn btn-success" *ngIf="!nuevaPregunta" (click)="ActualizarPregunta()" >
+                    Actualizar
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
 <!-- Modal editar FFORMATO -->
 <div class="modal fade modal-dialog-scrollable  " id="Modalformatoa" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
